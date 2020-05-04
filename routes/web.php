@@ -1,0 +1,89 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', 'HomeController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//     المحفظين ... Users والأدمن والأباء  ..... .... .......
+Route::group(['prefix' => 'users', 'middleware' => 'auth', 'namespace' => 'user'], function () {
+    Route::get('/', 'UsersController@index');
+    Route::get('/show', 'UsersController@show');
+    Route::get('/create', 'UsersController@create');
+    Route::post('/store', 'UsersController@store')->name('storeUser');
+    Route::post('/updatePassword/{id}', 'UsersController@updatePassword')->name('updatePassword');
+    Route::put('/updatephoto/{id}', 'UsersController@updatePhoto');
+});
+
+// الطلاب ... students
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/students', 'StudentsController');
+});
+
+// البرامج ... programs
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/programs', 'ProgramsController');
+});
+
+// أيام عمل البرنامج  ... dateworkprograms
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/dateworkprograms', 'DateworkprogramsController');
+});
+
+// الحضور السنة كلها... presencestudents
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/presencestudents', 'PresencestudentsController');
+});
+
+//    حضور المحفظين الدورات ... presenceusers
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/presenceusers', 'PresenceusersController');
+});
+
+//    الدورات ... courses
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/courses', 'CoursesController');
+});
+
+//    طلاب الدورات ... coursestudents
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/coursestudents', 'CoursestudentsController');
+});
+
+//    حضور الدورات ... presencecourses
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/presencecourses', 'PresencecoursesController');
+});
+
+//    إختبار الدورات ... coursetesting
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/coursetesting', 'CoursetestingController');
+});
+
+    /*
+    المحفظين ... Users والأدمن والأباء  ..... .... .......
+    الطلاب ... students
+    البرامج ... programs
+    أيام عمل البرنامج  ... dateworkprograms
+    الحضور السنة كلها... presencestudents
+    حضور المحفظين الدورات ... presenceusers
+    الدورات ... courses
+    طلاب الدورات ... coursestudents
+    حضور الدورات ... presencecourses
+    إختبار الدورات ... coursetesting
+    */
