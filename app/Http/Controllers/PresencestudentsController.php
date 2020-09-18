@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\presencestudents;
+use App\students;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresencestudentsController extends Controller
 {
@@ -15,6 +17,15 @@ class PresencestudentsController extends Controller
     public function index()
     {
         //
+        if(Auth::user()->role == 1 || Auth::user()->role == 2 ){
+            $data = presencestudents::all();
+        }else{
+            $data = presencestudents::where('user_id',Auth::user()->id)->get();
+        }if(Auth::user()->role == 4){
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect()->back();
+        }
+        return view('control.presencestudents.index',compact('data'));
     }
 
     /**
@@ -22,9 +33,12 @@ class PresencestudentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $this_student = students::find($id);
+        return view('control.presencestudents.create', compact('this_student'));
+        
     }
 
     /**

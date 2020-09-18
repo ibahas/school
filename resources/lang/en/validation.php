@@ -182,6 +182,9 @@ return [
         'details'               => 'التفاصيل ',
         'amount'                => 'المبلغ',
         'photo'                 => 'الصورة',
+        'program_id'            => 'البرنامج',
+        'pearint_id'            => 'الأب',
+        'wallet_id'            => 'المحفظ',
     ],
 
 ];

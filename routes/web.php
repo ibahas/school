@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
@@ -27,8 +27,12 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth', 'namespace' => 'user'
     Route::get('/create', 'UsersController@create');
     Route::post('/store', 'UsersController@store')->name('storeUser');
     Route::post('/updatePassword/{id}', 'UsersController@updatePassword')->name('updatePassword');
-    Route::put('/updatephoto/{id}', 'UsersController@updatePhoto');
+    Route::put('/updatephoto/{id}', 'UsersController@updatePhoto')->name('updatephoto');
+    Route::put('/userupdate','UsersController@updateInfoUser')->name('userupdate');
 });
+
+// طلابي ... teacherstudents
+Route::get('teacherstudents','TeacherstudentsController@index');
 
 // الطلاب ... students
 Route::group(['middleware' => 'auth'], function () {
@@ -45,9 +49,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/dateworkprograms', 'DateworkprogramsController');
 });
 
+// حضور الموظفين ... stafftime
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/stafftime', 'StafftimeController');
+});
 // الحضور السنة كلها... presencestudents
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/presencestudents', 'PresencestudentsController');
+    Route::get('/presencestudents/create/{id}','PresencestudentsController@create')->name('createPS');
 });
 
 //    حضور المحفظين الدورات ... presenceusers
@@ -86,4 +95,5 @@ Route::group(['middleware' => 'auth'], function () {
     طلاب الدورات ... coursestudents
     حضور الدورات ... presencecourses
     إختبار الدورات ... coursetesting
+    دوام الموظفين ... stafftime
     */

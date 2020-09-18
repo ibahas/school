@@ -1,76 +1,61 @@
-@extends('layouts.app')
+@extends('layouts.log')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+@section('contents')
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+<form action="{{ route('register')  }}" class="m-login__form m-form" method="post" role="form">
+    @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+    <div class="form-group m-form__group">
+        <input class="form-control m-input" type="name"  placeholder="إسم المستخدم" name="name"   value="{{ old('name') }}" autofocus/>
+        @error('name')
+             <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+             </span>
+         @enderror
+     </div>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="form-group m-form__group">
+       <input class="form-control m-input" type="email"  placeholder="البريد الإلكتروني" name="email"   value="{{ old('email') }}" required autocomplete="email"  />
+       @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
-</div>
+
+    <div class="form-group m-form__group">
+       <input class="form-control m-input m-login__form-input--last" type="password" placeholder="كلمة المرور" name="password"  required autocomplete="new-password" />
+       @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+
+    <div class="form-group m-form__group">
+        <input class="form-control m-input m-login__form-input--last" type="password" placeholder="كلمة المرور" name="password_confirmation"  required autocomplete="new-password" />
+        @error('password_confirmation')
+             <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+             </span>
+         @enderror
+     </div>
+
+     <div class="row m-login__form-sub">
+        <div class="col m--align-left m-login__form-left">
+           <label class="m-checkbox  m-checkbox--light"  style="background-color: #9acd3200 !important;">
+             <input id="RememberMe" name="RememberMe" type="checkbox" value="true" />
+             <input name="RememberMe" type="hidden" value="false" /> <h6 style="font-weight: bolder">تذكرني</h6> 
+             <span class="che"></span>
+           </label>
+        </div>
+     </div>
+    <div class="m-login__form-action">
+       <button id="m_login_signin_submit" type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">تسجيل الدخول </button>
+    </div>
+ </form>
+
+
+
 @endsection
