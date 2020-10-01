@@ -3,6 +3,9 @@
 namespace App\Http;
 
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\Administrator;
+use App\Http\Middleware\Parents;
+use App\Http\Middleware\Teacher;
 use App\Http\Middleware\User;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -38,6 +41,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \UxWeb\SweetAlert\ConvertMessagesIntoSweetAlert::class,
+
         ],
 
         'api' => [
@@ -65,6 +70,11 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => Admin::class,
         'user' => User::class,
+        'parents' => Parents::class,
+        'administrator' => Administrator::class,
+        'teacher' => Teacher::class,
+        'alert' => \UxWeb\SweetAlert\ConvertMessagesIntoSweetAlert::class,
+
     ];
 
     /**

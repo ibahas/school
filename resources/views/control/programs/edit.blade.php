@@ -16,110 +16,32 @@
 
 @extends('layouts.app')
 @section('content')
-
-<div class="row">
-    <div class="tab">
-        <a href="{{action('StudentsController@create')}}">ADD</a>
-    </div>
-</div>
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <form action="{{action('StudentsController@update',$data->id)}}" method="post" enctype="multipart/form-data">
+            <div class="card-header card-header-primary ">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <h4 class="card-title" >تعديل البرنامج</h4>
+                    <p class="card-category"></p>
+                  </li>
+                </ul>
+              </div>
+            <form action="{{action('ProgramsController@update',$data->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                    <div class="form-group">
-                        <label for="name">إسم الطالب</label>
-                        <input type="text" class="form-control name" name="name" id="name" aria-describedby="name"
-                            placeholder="إسم الطالب" required autocomplete="name" value="{{$data->name}}">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" aria-describedby="title"
+                        placeholder="عنوان البرنامج" required autocomplete="title" value="{{$data->title}}">
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="form-group bmd-form-group is-filled">
+                      <textarea type="text" class="form-control" placeholder="وصف البرنامج" name="description" rows="4" >{{$data->description}}</textarea>
                     </div>
+                  </div>
 
-
-                    <div class="form-group">
-                        <label for="bod">تاريخ الميلاد</label>
-                        <input type="date" class="form-control" name="bod" id="bod" aria-describedby="bod"
-                            placeholder="تاريخ الميلاد" required autocomplete="bod" value="{{$data->bod}}">
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="phone">رقم جوال الطالب</label>
-                        <input type="text" class="form-control" name="phone" id="phone" aria-describedby="phone"
-                            placeholder="رقم جوال الطالب" required autocomplete="phone" value="0{{$data->phone}}">
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="photo">صورة الطالب</label>
-                        <input type="file" class="form-control" name="photo" id="photo" aria-describedby="photo"
-                            value="{{$data->photo}}">
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="address">عنوان الطالب</label>
-                        <input type="text" class="form-control" name="address" id="address" aria-describedby="address"
-                            placeholder="عنوان الطالب" required autocomplete="address" value="{{$data->address}}">
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="wallet_id">المحفظ</label>
-                        <select class="form-control" name="wallet_id" id="wallet_id" aria-describedby="wallet_id"
-                            required autocomplete="allUsers">
-
-                            @foreach($allUsers as $user)
-                            @if($user->role == 3)
-                            <option value="{{$user->id}}" @if($data->wallet_id == $user->id) selected @endif
-                                >{{$user->name}}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="pearint_id">الأب</label>
-                        <select class="form-control" name="pearint_id" id="pearint_id" aria-describedby="pearint_id"
-                            value="{{old('pearint_id')}}">
-
-                            @foreach($allUsers as $user)
-                            @if($user->role == 4)
-                            <option value="{{$user->id}}" @if($data->pearint_id == $user->id) selected @endif
-                                >{{$user->name}}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="program_id">البرنامج</label>
-                        <select class="form-control" name="program_id" id="program_id" aria-describedby="pearint_id">
-
-                            @foreach($programs as $program)
-                            <option value="{{$program->id}}" @if($data->program_id == $program->id) selected @endif
-                                >{{$program->title}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="rating">التقيم</label>
-                        <input type="number" class="form-control" name="rating" id="rating" aria-describedby="rating"
-                            placeholder="تقيم الطالب" required autocomplete="rating" value="{{$data->rating}}">
-                    </div>
-
-
-                    <button type="submit" class="btn btn-info">إضافة</button>
-                    {{-- @if(count($errors))
-                    <ul> --}}
-                    {{-- @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach --}}
-                    {{-- </ul> --}}
-                    {{-- @endif --}}
+                <button type="submit" class="btn btn-info">إضافة</button>
                 </form>
 
 

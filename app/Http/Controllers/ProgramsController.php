@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\programs;
 use App\students;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,9 +62,14 @@ class ProgramsController extends Controller
     public function show($id)
     {
         //
-        $data = programs::find($id);
-        $students = students::where('program_id', $id)->get();
-        return view('control.programs.show', compact('data', 'students'));
+        if(Auth::user()->role ==1 || Auth::user()->role == 2){
+            $data = programs::find($id);
+            $students = students::where('program_id', $id)->get();
+            return view('control.programs.show', compact('data', 'students'));
+        }else{
+            alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');
+            return redirect('home');
+        }
     }
 
     /**
@@ -76,7 +82,8 @@ class ProgramsController extends Controller
     {
         //
         $data = programs::find($id);
-        return view('control.programs.edit', compact('data'));
+        $allUsers  = User::all();
+        return view('control.programs.edit', compact('data','allUsers'));
     }
 
     /**

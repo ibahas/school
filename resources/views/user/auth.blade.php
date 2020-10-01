@@ -52,9 +52,38 @@
             <input id="confirmPassword" type="password" required name="confirmPassword"
                 value="{{ old('confirmPassword') }}" autocomplete="new-password" placeholder="Confirm Password">
             <button type="submit" class="btn btn-info submit" >sumbit</button>
-
-
         </form>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="/users/userupdate" method="post">
+            @csrf
+            @method('PUT')
+             <div class="form-group">
+                <label for="exampleInputName">Name</label>
+                <input type="text" name="name" id="exampleInputName" value="{{Auth::user()->name}}">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputbod">bod</label>
+                <input type="date" name="bod" id="exampleInputbod" value="{{Auth::user()->bod}}">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputphone">phone</label>
+                <input type="number" name="phone" id="exampleInputphone" value="{{Auth::user()->phone}}">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputaddress">address</label>
+                <input type="text" name="address" id="exampleInputaddress" value="{{Auth::user()->address}}">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputemail">email</label>
+                <input type="text" name="email" id="exampleInputemail" value="{{Auth::user()->email}}">
+              </div>
+              <div class="form-group">
+                  <button type="submit">save</button>
+              </div>
+            </form>
+        </div>
     </div>
 </div>
 
