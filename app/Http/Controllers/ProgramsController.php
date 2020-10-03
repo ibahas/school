@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class ProgramsController extends Controller
 {
     /**
+     * This construct start in initialize this controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -18,7 +26,7 @@ class ProgramsController extends Controller
     public function index()
     {
         //
-        $data = programs::all();
+        $data = programs::orderBy('id', 'DESC')->get();
         return view('control.programs.index', compact('data'));
     }
 
@@ -62,11 +70,11 @@ class ProgramsController extends Controller
     public function show($id)
     {
         //
-        if(Auth::user()->role ==1 || Auth::user()->role == 2){
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
             $data = programs::find($id);
             $students = students::where('program_id', $id)->get();
             return view('control.programs.show', compact('data', 'students'));
-        }else{
+        } else {
             alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');
             return redirect('home');
         }
@@ -83,7 +91,7 @@ class ProgramsController extends Controller
         //
         $data = programs::find($id);
         $allUsers  = User::all();
-        return view('control.programs.edit', compact('data','allUsers'));
+        return view('control.programs.edit', compact('data', 'allUsers'));
     }
 
     /**

@@ -33,10 +33,10 @@
         <div class="nav">
             <ul class="navbar-nav">
             <li class="nav-item"></li>
-            <a class="nav-link" href="{{action('StudentsController@create')}}">
+            <a class="nav-link" href="{{action('CoursesController@create')}}">
                 <p>
                 <i class="material-icons">person_add</i>
-                إضافة طالب</p>
+                إضافة دورة جديدة</p>
             </a>
             </ul>
         </div>
@@ -45,29 +45,27 @@
 <div class="row">
     <table class="table" id="funSearch">
         <thead>
-            <th>الإسم</th>
-            <th>تاريخ الميلاد</th>
-            <th>رقم الجوال</th>
-            <th>أخر درجة</th>
-            <th>المحفظ</th>
-            <th>الأب</th>
-            <th>البرنامج الحالي</th>
+            <th>العنوان</th>
+            <th>الوصف</th>
+            <th>الحالة</th>
             <th>العمليات</th>
         </thead>
         <tbody>
             @foreach ($data as $row)
             <tr scope="row">
-                <td>{{$row->name}}</td>
-                <td>{{$row->bod}}</td>
-                <td>0{{$row->phone}}</td>
-                <td>{{$row->rating}}</td>
-                <td>{{App\User::find($row->wallet_id)->name}}</td>
-                <td>{{App\User::find($row->pearint_id)->name}}</td>
-                <td>{{App\programs::find($row->program_id)->title}}</td>
+                <td>{{$row->title}}</td>
+                <td>{{ \Illuminate\Support\Str::limit($row->description, 40) }}</td>
                 <td>
-                    <a href="{{action('StudentsController@edit',$row->id)}}">تعديل</a>
+                    @if ($row->status == 1)
+                        <button class="btn btn-success">فعال</button>
+                    @else    
+                        <button class="btn btn-warning">غير فعال</button>
+                    @endif
+                </td>
+                <td>
+                    <a href="{{action('CoursesController@edit',$row->id)}}">تعديل</a>
                     <br>
-                    <a href="{{action('StudentsController@show',$row->id)}}">عرض</a>
+                    <a href="{{action('CoursesController@show',$row->id)}}">عرض</a>
                 </td>
             </tr>
             @endforeach

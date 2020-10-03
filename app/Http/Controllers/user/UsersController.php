@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+    /**
+     * This construct start in initialize this controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     public function index()
     {
@@ -123,7 +130,7 @@ class UsersController extends Controller
     public function updateInfoUser(Request $request)
     {
         $id = Auth::user()->id;
-        if(Auth::user()->email !== $request->email){
+        if (Auth::user()->email !== $request->email) {
             $request->validate([
                 'email' => ['required', 'unique:users'],
             ]);
@@ -138,5 +145,32 @@ class UsersController extends Controller
         User::where('id', $id)->update($data);
         alert()->success('تم تحديث البيانات بنجاح');
         return redirect('users/show');
+    }
+    public function showAllParents()
+    {
+        # code...
+        $data = User::where('role', 4)->get();
+        return view('user.parents', compact('data'));
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\User  $User
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        $User = User::find($id);
+        $User->delete($id);
+        alert()->success('تم حذف المستخدم');
+        $string = request()->headers->get('referer');
+        $pieces = explode('/', $string);
+        $last_word = array_pop($pieces);
+        if($last_word == "parents"){
+            return back();
+        }else{
+            return redirect('users');
+        }
     }
 }

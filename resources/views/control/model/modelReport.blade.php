@@ -1,32 +1,24 @@
-<style>
-    .modal-header .close {
-    padding: 1rem !important;
-    margin: -1rem 0rem auto !important;
-}
-.modal-body{
-    float: right !important;
-}
-</style>
-<!-- Modal -->
-<div class="modal fade"  id="modal_{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_{{$row->id}}" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel_{{$row->id}}">بلاغ الطالب :: {{App\students::find($row->student)->name}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" >
-          <div style="float: right;">
-            <p style=" float: inherit; ">عنوان البلاغ : {{$row->titleReport}}</p>
-            <br>
-            <p>تفاصيل البلاغ : {{$row->detailsReport}}</p>
-          </div>
-        </div>
-        <div class="modal-footer">
+<div id="id_{{$row->id}}" class="w3-modal">
+  <div class="w3-modal-content">
+    <span onclick="document.getElementById('id_{{$row->id}}').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+    <div class="w3-container">
+      <div>
+        <br>
+        <br>
+          <div class="row" dir="rtl">
+              <div class="col-2"></div>
+              <div class="col-6">
+                <p style="float: right"> <mark>عنوان البلاغ :</mark> <span>{{$row->titleReport}}</span></p>
+                <br>
+                <br>
+                <p style="float: right"> <mark>تفاصيل البلاغ :</mark> <span>{{$row->detailsReport}}</span></p>
+                <br>
+                <br>
+            </div>
         </div>
       </div>
     </div>
+    </div>
   </div>
-  
+</div>
+</div>

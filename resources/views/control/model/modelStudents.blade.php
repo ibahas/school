@@ -4,7 +4,7 @@
       <span onclick="document.getElementById('id_{{$row->id}}').style.display='none'" class="w3-button w3-display-topright">&times;</span>
       <br>
       <br>
-
+        @if(Auth::user()->role == 1 || Auth::user()->role == 2)
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-6">
@@ -13,6 +13,7 @@
               </div>
           </div>
       </div>
+      @endif
     </div>
       <form action="{{action('PresencestudentsController@store')}}" method="post" id="formPresence" hidden>
         @csrf
@@ -50,6 +51,8 @@
           <br>
           <br>
           <div class="row">
+            <div class="col-3"></div>
+
             <div class="col-3">
               <button id="formDeparture" class="btn btn-warning" type="submit" onclick="document.getElementById('formDeparture').submit();">إضافة إنصراف</button>  
             </div>
@@ -59,7 +62,6 @@
             <div class="col-3">
               <button id="formAbsence" class="btn btn-danger" type="submit" onclick="document.getElementById('formAbsence').submit();">إضافة غياب</button>
             </div>
-            <div class="col-3"></div>
         </div>
         <br>
 

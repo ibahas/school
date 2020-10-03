@@ -48,7 +48,8 @@
                 <td>
                     <a href="{{action('StudentsController@edit',$row->id)}}">تعديل</a>
                     <br>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_{{$row->id}}">
+                    <button type="button" class="btn btn-primary" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="إضافة حضور"
+                    onclick="document.getElementById('id_{{$row->id}}').style.display='block'">
                         عرض التفاصيل
                     </button>
 
@@ -60,26 +61,51 @@
                 <td>{{App\students::find($row->student)->name}}</td>
                 <td>{{$row->titleReport}}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_{{$row->id}}">
+                    <buttontype="button" class="btn btn-primary" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="إضافة حضور"
+                    onclick="document.getElementById('id_{{$row->id}}').style.display='block'">
                         عرض التفاصيل
                     </button>
                     
                 </td>
             </tr>
             @endif
+            @if(Auth::user()->role == 3)
+            @if(Auth::user()->id == $row->byUser)
+            <tr scope="row">
+                <td>{{App\User::find($row->parent)->name}}</td>
+                <td>{{$row->titleReport}}</td>
+                <td>
+                    <a href="{{action('StudentsController@edit',$row->id)}}">تعديل</a>
+                    <br>
+                    <button type="button" class="btn btn-primary" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="إضافة حضور"
+                    onclick="document.getElementById('id_{{$row->id}}').style.display='block'">
+                        عرض التفاصيل
+                    </button>
+
+                </td>
+            </tr>
+            @endif
+            @endif
             @endforeach
-            @foreach ($data as $row)
-                @if(Auth::user()->role == 4 && $row->parent == Auth::user()->id)
-                    @include('control.model.modelReport')
-                @endif
-            @endforeach
+            @if(Auth::user()->role == 4 && $row->parenzt == Auth::user()->id)
+                @foreach ($data as $row)
+                        @include('control.model.modelReport')
+                @endforeach
+            @endif
         </tbody>
     </table>
 </div>
-@if (Auth::user()->role == 1 || 2)
-@foreach ($data as $row)
-@include('control.model.modelReport')
-@endforeach
+@if (Auth::user()->role == 1 || Auth::user()->role == 2)
+    @foreach ($data as $row)
+        @include('control.model.modelReport')
+    @endforeach
+@endif
+@if (Auth::user()->role == 3)
+    @foreach ($data as $row)
+        @if(Auth::user()->id == $row->byUser)
+            @include('control.model.modelReport')
+        @endif
+    @endforeach
 @endif
 
 

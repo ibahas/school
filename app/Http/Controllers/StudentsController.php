@@ -30,7 +30,7 @@ class StudentsController extends Controller
         //
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
 
-            $data = students::all();
+            $data = students::orderBy('id', 'DESC')->get();
             return view('control.students.index', compact('data'));
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');
@@ -79,7 +79,7 @@ class StudentsController extends Controller
                 'program_id' => 'required',
 
             ]);
-
+                //Add Image If exist
             if ($request->hasFile('photo')) {
                 $files = $request->file('photo');
                 $destinationPath = public_path("/image/students/");
@@ -88,7 +88,7 @@ class StudentsController extends Controller
             } else {
                 $imgfile = null;
             }
-
+            
             $data = [
                 'name' => $request->name,
                 'bod' => $request->bod,
@@ -104,7 +104,7 @@ class StudentsController extends Controller
             $lastSTD = students::orderBy('id', 'DESC')->first();
 
             $data1 = [
-                'student_id' => $lastSTD->id + 1 ,
+                'student_id' => $lastSTD->id + 1,
                 'state' =>  1,
                 'date_add' => now()->format('Y-m-d'),
                 'date_leave' => null,
@@ -179,7 +179,6 @@ class StudentsController extends Controller
         //
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
 
-
             request()->validate([
                 'name' => 'required|min:3',
                 'bod' => 'required',
@@ -199,9 +198,33 @@ class StudentsController extends Controller
                 $files->move($destinationPath, $imgfile);
             } else {
                 $findThisStudnets = students::find($id);
-
                 $imgfile = $findThisStudnets->photo;
             }
+            $old = students::find($id);
+            $new = $request->program_id;
+            if ($old->program_id == $new) {
+            } else {
+                $newData = [
+                    'student_id' => $id,
+                    'state' => '2',
+                    'date_add' => null,
+                    'date_leave' => now(),
+                    'user_id' => Auth::user()->id,
+                    'program_id' => $old->program_id,
+                ];
+                $newData1 = [
+                    'student_id' => $id,
+                    'state' => '1',
+                    'date_add' => now(),
+                    'date_leave' =>  null,
+                    'user_id' => Auth::user()->id,
+                    'program_id' => $new,
+                ];
+                logStudents::create($newData);
+                logStudents::create($newData1);
+            }
+            // echo ;
+            // exit;
             $data = [
                 'name' => $request->name,
                 'bod' => $request->bod,

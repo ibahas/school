@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class StudentsParentsController extends Controller
 {
     /**
+     * This construct start in initialize this controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -18,7 +26,7 @@ class StudentsParentsController extends Controller
     public function index()
     {
         //
-        $data = studentsParents::all();
+        $data = studentsParents::orderBy('id', 'DESC')->get();
         return view('control.studentsParents.index', compact('data'));
     }
 
@@ -32,7 +40,6 @@ class StudentsParentsController extends Controller
         //
         $findStudent = students::find($id);
         return view('control.studentsParents.create', compact('findStudent'));
-
     }
 
     /**
@@ -45,7 +52,7 @@ class StudentsParentsController extends Controller
     {
         //
         $findStudent = students::find($request->student);
-        $thisParent = User::where('id',$findStudent->pearint_id)->first();
+        $thisParent = User::where('id', $findStudent->pearint_id)->first();
 
         $data = [
             'student' => $request->student,
@@ -58,7 +65,6 @@ class StudentsParentsController extends Controller
         studentsParents::create($data);
         alert()->success('تم إضافة البلاغ بنجاح');
         return redirect('studentsParents');
-
     }
 
     /**

@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use App\courses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use function GuzzleHttp\Promise\all;
 
 class CoursesController extends Controller
 {
+    /**
+     * This construct start in initialize this controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +26,8 @@ class CoursesController extends Controller
     public function index()
     {
         //
+        $data = courses::orderBy('id', 'DESC')->get();
+        return view('control.courses.index', compact('data'));
     }
 
     /**
@@ -25,6 +38,12 @@ class CoursesController extends Controller
     public function create()
     {
         //
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            return view('control.courses.create');
+        } else {
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect('home');
+        }
     }
 
     /**
@@ -36,6 +55,15 @@ class CoursesController extends Controller
     public function store(Request $request)
     {
         //
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => 1,
+            'user_id' => Auth::user()->id,
+        ];
+        courses::create($data);
+        alert()->success('تم اضافة الدورة');
+        return redirect('courses');
     }
 
     /**
@@ -55,9 +83,11 @@ class CoursesController extends Controller
      * @param  \App\courses  $courses
      * @return \Illuminate\Http\Response
      */
-    public function edit(courses $courses)
+    public function edit($id)
     {
         //
+        $data = courses::find($id);
+        return view('control.courses.edit',compact('data'));
     }
 
     /**
@@ -67,9 +97,18 @@ class CoursesController extends Controller
      * @param  \App\courses  $courses
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, courses $courses)
+    public function update(Request $request, $id)
     {
         //
+       $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+            'user_id' => Auth::user()->id,
+        ];
+        courses::where('id',$id)->update($data);
+        alert()->success('تم تحديث الدورة');
+        return redirect('courses');
     }
 
     /**

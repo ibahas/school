@@ -1,7 +1,5 @@
 <title>لوحة التحكم | مدرسة الإتقان</title>
 
-<!-- Scripts -->
-    <script src="{{ asset('js/app.js')}}" defer></script>
 
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="#">
@@ -32,11 +30,6 @@
     .btn-sm>.material-icons{
       right: -1rem;
     }
-    @media  screen and (min-width: 768px){
-      .footer .copyright {
-          padding-right: 18rem;
-      }
-    }
   </style>
 <script src="{{ asset('js/jquery.js')}}"></script>
     <script>
@@ -50,7 +43,7 @@
     </script>
 
 <!-- CSRF Token -->
-<meta name="csrf-token" content="hP7w2IYOrWQIKrVKExoh4eZp3BqUgMdiF0Tp7SmK">
+<meta name="csrf-token" content="{{csrf_token()}}">
 <script>
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -60,12 +53,16 @@
     <script>
         $(document).ready(function () {
               $(".sweet-overlay").fadeTo(2000, 100).slideUp(100, function () {
-                  $(".sweet-overlay").slideUp(100);
+                  $(".sweet-overlay").slideUp(500);
               });
-              $(".sweet-alert").fadeTo(2000, 100).slideUp(100, function () {
-                  $(".sweet-alert").slideUp(100);
+              $(".sweet-alert").fadeTo(2000, 500).slideUp(500, function () {
+                  $(".sweet-alert").slideUp(500);
               });
             
           });
 
     </script>
+
+    
+<!-- Scripts -->
+<script src="{{ asset('js/app.js')}}"></script>

@@ -12,6 +12,13 @@ use function GuzzleHttp\Promise\all;
 
 class PresencestudentsController extends Controller
 {
+    /**
+     * This construct start in initialize this controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 
     /**
@@ -23,9 +30,9 @@ class PresencestudentsController extends Controller
     {
         //
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
-            $data = presencestudents::all();
+            $data = presencestudents::orderBy('id', 'DESC')->get();
         } else {
-            $data = presencestudents::where('user_id', Auth::user()->id)->get();
+            $data = presencestudents::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
         }
         if (Auth::user()->role == 4) {
             alert()->warning('لا يوجد لديك أي صلاحية');
@@ -50,7 +57,7 @@ class PresencestudentsController extends Controller
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
             $this_student = students::find($id);
             return view('control.presencestudents.create', compact('this_student'));
-        }else {
+        } else {
             alert()->warning('لا يوجد لديك أي صلاحية');
             return redirect()->back();
         }
@@ -65,21 +72,12 @@ class PresencestudentsController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'date'       =>  'required',
-        ]);
-
-        if($request->status == 1){
-            // if()
-            echo $request->date;
-            echo "Awd";
-            exit;
-            alert()->warning('تأكد من التاريخ من فضلك');
-            return redirect()->back();
-        }
-
+     
 
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            $request->validate([
+                'date'       =>  'required',
+            ]);
             $data = [
                 'date' => $request->date,
                 'student_id' => $request->student_id,
@@ -90,7 +88,7 @@ class PresencestudentsController extends Controller
             $dataUserToDeleteing = presencestudents::where('date', $request->date)->where('student_id', $request->student_id)->get();
             $thisExisting = presencestudents::where('date', $request->date)->where('student_id', $request->student_id)->where('status', $request->status)->count();
 
-            if($request->status == 2 && $thisExisting !== 0  ){
+            if ($request->status == 2 && $thisExisting !== 0) {
                 alert()->warning('هذا الطالب لقد تم تسجيله غياب مسبقاً');
                 return redirect('students');
             }
@@ -104,7 +102,7 @@ class PresencestudentsController extends Controller
                 return redirect('students');
             }
             if ($request->status == 2) {
-    
+
                 // print_r($dataUserToDeleteing[0]->id);
                 foreach ($dataUserToDeleteing as $arr2) {
                     $presencestudents = presencestudents::find($arr2->id);
@@ -130,13 +128,13 @@ class PresencestudentsController extends Controller
                 'status' => $request->status,
             ];
             $dataUserToDeleteing = presencestudents::where('date', $dateNow)->where('student_id', $request->student_id)->get();
-            $findThisDate = presencestudents::where('date',$dateNow )->where('student_id', $request->student_id)->count();
+            $findThisDate = presencestudents::where('date', $dateNow)->where('student_id', $request->student_id)->count();
             $thisExisting = presencestudents::where('date', $dateNow)->where('student_id', $request->student_id)->where('status', $request->status)->count();
             $thisAbsence = presencestudents::where('date', $dateNow)->where('student_id', $request->student_id)->where('status', 2)->count();
-            if($thisAbsence !==  0){
+            if ($thisAbsence !==  0) {
                 $thisExisting = 1;
             }
-            if($request->status == 2 && $thisExisting !== 0  ){
+            if ($request->status == 2 && $thisExisting !== 0) {
                 alert()->warning('هذا الطالب لقد تم تسجيله غياب مسبقاً');
                 return redirect('teacherstudents');
             }
@@ -150,7 +148,7 @@ class PresencestudentsController extends Controller
                 return redirect('teacherstudents');
             }
             if ($request->status == 2) {
-    
+
                 // print_r($dataUserToDeleteing[0]->id);
                 foreach ($dataUserToDeleteing as $arr2) {
                     $presencestudents = presencestudents::find($arr2->id);
@@ -165,11 +163,10 @@ class PresencestudentsController extends Controller
                 presencestudents::create($data);
                 return redirect('teacherstudents');
             }
-        }else{
+        } else {
             alert()->warning('لا يوجد لديك أي صلاحية');
             return redirect()->back();
         }
-     
     }
 
     /**
@@ -200,7 +197,7 @@ class PresencestudentsController extends Controller
         }
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
             return view('control.presencestudents.edit', compact('data'));
-        }else {
+        } else {
             alert()->warning('لا يوجد لديك أي صلاحية');
             return redirect()->back();
         }

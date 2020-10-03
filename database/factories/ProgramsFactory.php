@@ -11,6 +11,8 @@ $factory->define(programs::class, function (Faker $faker) {
         'user_id' => Rand(1,10),
         'title' => $faker->title,
         'description' => $faker->paragraph,
-        'status' => Rand(1,2)
+        'status' => Rand(1,2),
+        'date_start' => '2020-08-01',
+        'expires_at' => '2020-10-01',
     ];
 });

@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class StafftimeController extends Controller
 {
     /**
+     * This construct start in initialize this controller
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -18,7 +26,7 @@ class StafftimeController extends Controller
     {
         //
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
-            $data = stafftime::all();
+            $data = stafftime::orderBy('id', 'DESC')->get();
             return view('control.stafftime.index', compact('data'));
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');
@@ -35,7 +43,7 @@ class StafftimeController extends Controller
     {
         //
         if (Auth::user()->role == 1) {
-            $data = stafftime::all();
+            $data = stafftime::orderBy('id', 'DESC')->get();
             $allUsers = User::all();
             return view('control.stafftime.create', compact('data', 'allUsers'));
         } else {
@@ -56,18 +64,24 @@ class StafftimeController extends Controller
         if (Auth::user()->role == 1) {
             request()->validate([
                 'user_id' => 'required',
-                'data' => 'required',
                 'state' => 'required'
             ]);
 
+            // dd($request);
+            $date = now()->format('Y-m-d');
             $data = [
                 'user_id' => $request->user_id,
                 'state' => $request->state,
-                'date' => $request->date,
+                'date' => $date,
             ];
 
             stafftime::create($data);
-            alert()->success('تم إضافة الحضور بنجاح .');
+            alert()->success('تم إضافة الحضور  .');
+            // $string = request()->headers->get('referer');
+            // $pieces = explode('/', $string);
+            // $last_word = array_pop($pieces);
+            // echo $last_word;
+
             return redirect('stafftime');
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');
@@ -121,22 +135,26 @@ class StafftimeController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
         if (Auth::user()->role == 1) {
+            $user_ids = stafftime::find($id);
+
             request()->validate([
-                'user_id' => 'required',
-                'data' => 'required',
+                'date' => 'required',
                 'state' => 'required'
             ]);
             $data = [
-                'user_id' => $request->user_id,
+                'user_id' => $user_ids->user_id,
                 'state' => $request->state,
                 'date' => $request->date,
             ];
             // dd($data);
             stafftime::where('id', $id)->update($data);
-            $user_id = User::find($id);
-
-            alert()->success('تم تعديل حظور الموظف  ' . $user_id->name . '   بنجاح .');
+            $user_id = User::where('id', $user_ids->user_id)->first();
+            // dd($user_id);
+            // exit;
+            alert()->success('تم تعديل حظور الموظف  ' . $user_id->name . '.');
             return redirect('stafftime');
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');

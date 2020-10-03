@@ -25,41 +25,49 @@
 </script>
 @endsection
 
+
 @extends('layouts.app')
 @section('content')
 
 <div class="row">
     <div class="tab">
-        <a href="{{action('ProgramsController@create')}}">
-            <i class="material-icons">add_circle_outline</i>
-            إضافة برنامج جديد 
-    </a>
+        <div class="nav">
+            <ul class="navbar-nav">
+            <li class="nav-item"></li>
+            <a class="nav-link" href="{{route('createUser')}}">
+                <p>
+                <i class="material-icons">person_add</i>
+                إضافة محفظ جديد</p>
+            </a>
+            </ul>
+        </div>
     </div>
 </div>
 <div class="row">
-    <table class="table" style="overflow: hidden" id="funSearch">
+    <table dir="rtl" class="table" id="funSearch">
         <thead>
-            <th>المحفظ</th>
-            <th>التاريخ</th>
-            <th>الحالة</th>
+            <th>الإسم</th>
+            <th>رقم الجوال</th>
+            <th>الإيميل</th>
             <th>العمليات</th>
         </thead>
         <tbody>
             @foreach ($data as $row)
             <tr scope="row">
-                <td>{{App\User::find($row->user_id)->name}}</td>
-                <td>{{$row->date}}</td>
-                <td>@if($row->state == 1) <button type="button" class="btn btn-success color-white">حضور</button>  @else <button type="button" class="btn btn-danger text-wringing">غياب</button> @endif</td>
+                <td>{{$row->name}}</td>
+                <td>{{$row->phone}}</td>
+                <td>{{$row->email}}</td>
                 <td>
-                    <a href="{{action('StafftimeController@edit',$row->id)}}">
-                        <i class="material-icons">mode_edit</i>
-                    </a>
+                    <a class="btn btn-success">تعديل</a>
+                <form action="{{url('users/destroy')}}/{{ $row->id }}" method="post">
+                            @csrf
+                        <button type="submit" class="btn btn-warning">حذف</button>
+                    </form>
+                    {{-- <a class="btn btn-success"></a> --}}
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
-
-
 @endsection

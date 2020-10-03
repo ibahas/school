@@ -30,14 +30,26 @@
                 <td>{{$row->rating}}</td>
                 <td>{{App\User::find($row->pearint_id)->name}}</td>
                 <td>{{App\programs::find($row->program_id)->title}}</td>
-                <td>
-                    <a href="{{action('PresencestudentsController@create',$row->id)}}" data-toggle="tooltip" data-placement="top" title="إضافة حضور">
-                        <i class="material-icons">note_add</i>
-                    </a>
-                </td>
+                <td style="padding: 0 !important">
+                    <div class="bd-example">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="إضافة حضور"
+                        onclick="document.getElementById('id_{{$row->id}}').style.display='block'">
+                        <br>
+                            <i class="material-icons">add_circle_outline</i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="إضافة بلاغ"
+                           onClick="window.open('{{route('createReport',$row->id)}}');">
+                            <br>
+                            <i class="material-icons">error_outline</i>
+                        </button>
+                    </div>
+                    </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
 @endsection
+@foreach ($data as $row)
+@include('control.model.modelStudents')
+@endforeach

@@ -24,15 +24,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'users', 'middleware' => 'auth', 'namespace' => 'user'], function () {
     Route::get('/', 'UsersController@index');
     Route::get('/show', 'UsersController@show');
-    Route::get('/create', 'UsersController@create');
+    Route::get('/create', 'UsersController@create')->name('createUser');
     Route::post('/store', 'UsersController@store')->name('storeUser');
     Route::post('/updatePassword/{id}', 'UsersController@updatePassword')->name('updatePassword');
     Route::put('/updatephoto/{id}', 'UsersController@updatePhoto')->name('updatephoto');
-    Route::put('/userupdate','UsersController@updateInfoUser')->name('userupdate');
+    Route::put('/userupdate', 'UsersController@updateInfoUser')->name('userupdate');
+    Route::post('/destroy/{id}', 'UsersController@destroy')->name('destroyUser');
+    Route::get('/parents', 'UsersController@showAllParents')->name('showAllParents');
 });
 
 // طلابي ... teacherstudents
-Route::get('teacherstudents','TeacherstudentsController@index');
+Route::get('teacherstudents', 'TeacherstudentsController@index');
 
 // الطلاب ... students
 Route::group(['middleware' => 'auth'], function () {
@@ -56,7 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 // الحضور السنة كلها... presencestudents
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/presencestudents', 'PresencestudentsController');
-    Route::get('/presencestudents/create/{id}','PresencestudentsController@create')->name('createPS');
+    Route::get('/presencestudents/create/{id}', 'PresencestudentsController@create')->name('createPS');
 });
 
 //    حضور المحفظين الدورات ... presenceusers
@@ -87,8 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
 //   بلاغات الطالب للأب ... studentsParents ...... reportStudents تحديث للViews.
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/reportStudents', 'StudentsParentsController');
-    Route::get('/reportStudents/create/{id}','StudentsParentsController@create')->name('createReport');
-
+    Route::get('/reportStudents/create/{id}', 'StudentsParentsController@create')->name('createReport');
 });
 
     /*
@@ -101,7 +102,6 @@ Route::group(['middleware' => 'auth'], function () {
     الدورات ... courses
     طلاب الدورات ... coursestudents
     حضور الدورات ... presencecourses
-    إختبار الدورات ... coursetesting
     دوام الموظفين ... stafftime
     إختبار الدورات ... coursetestings
     عرض بدء وانتهاء الطالب من برنامج معين ... log_students

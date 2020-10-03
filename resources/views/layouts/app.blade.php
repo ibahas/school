@@ -3,10 +3,16 @@
 <head>
     @yield('header')
     @include('layouts.header')
-
+    @if (Request::is('*/edit'))
+    <style>
+        label{
+          float: right !important;
+        }
+    </style>
+    @endif
 </head>
 
-<body dir="rtl">
+<body dir="rtl" id="app">
     <div class="wrapper ">
         <div class="sidebar" data-color="azure" data-background-color="white" data-image="{{ asset('assets/img/sidebar-1.jpg')}}">
           <!--
@@ -19,26 +25,49 @@
           </div>
           <div class="sidebar-wrapper">
             <ul class="nav">
-              @if (Auth::user()->role == 1 || Auth::user()->role == 2)
-              <li class="nav-item  {{ Request::is('students*') ? 'active' : '' }}  ">
-                <a class="nav-link " href="{{url('students')}}">
-                  <i class="material-icons">people</i>
-                  <p>{{ _('الطلاب')}}</p>
-                </a>
-              </li> 
-              <li class="nav-item  {{ Request::is('programs*') ? 'active' : '' }}  ">
-                <a class="nav-link " href="{{url('programs')}}">
-                  <i class="material-icons">perm_data_setting</i>
-                  <p>{{ _('البرامج')}}</p>
-                </a>
-              </li>
-              <li class="nav-item  {{ Request::is('stafftime*') ? 'active' : '' }}  ">
-                <a class="nav-link " href="{{url('stafftime')}}">
-                  <i class="material-icons">perm_data_setting</i>
-                  <p>{{ _('حضور المحفظين')}}</p>
-                </a>
-              </li>
               
+              @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+              <li class="nav-item  dropdown">
+                <a class="nav-link"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                  <i class="material-icons">person</i>
+                  <p>{{ _('المستخدمين')}}</p>
+
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style=" position: absolute; right: -172%; ">
+                  <a class="dropdown-item" href="{{action('user\UsersController@index')}}">
+                    <i class="material-icons">people</i>{{ __('المحفظين')}}</a>
+                    <a class="dropdown-item" href="{{action('user\UsersController@showAllParents')}}">
+                      <i class="material-icons">people</i>{{ __('الأباء')}}</a>
+                  <div class="dropdown-menu">
+                </div>
+
+                </div>
+              </li>
+                <li class="nav-item  {{ Request::is('students*') ? 'active' : '' }}  ">
+                  <a class="nav-link " href="{{url('students')}}">
+                    <i class="material-icons">people</i>
+                    <p>{{ _('الطلاب')}}</p>
+                  </a>
+                </li>
+              
+                <li class="nav-item  {{ Request::is('programs*') ? 'active' : '' }}  ">
+                  <a class="nav-link " href="{{url('programs')}}">
+                    <i class="material-icons">perm_data_setting</i>
+                    <p>{{ _('البرامج')}}</p>
+                  </a>
+                </li>
+                <li class="nav-item  {{ Request::is('stafftime*') ? 'active' : '' }}  ">
+                  <a class="nav-link " href="{{url('stafftime')}}">
+                    <i class="material-icons">perm_data_setting</i>
+                    <p>{{ _('حضور المحفظين')}}</p>
+                  </a>
+                </li>
+                <li class="nav-item  {{ Request::is('courses*') ? 'active' : '' }}  ">
+                  <a class="nav-link " href="{{url('courses')}}">
+                    <i class="material-icons">group_work</i>
+                    <p>{{ _('الدورات')}}</p>
+                  </a>
+                </li> 
                   @endif
                   @if(Auth::user()->role == 3)
                   <li class="nav-item  {{ Request::is('teacherstudents*') ? 'active' : '' }}  ">
@@ -128,15 +157,14 @@
                   @yield('content')
               </div>
               <footer class="footer">
-              @include('layouts.footer')
-            </footer>
+                @include('layouts.footer')
+             </footer>
           </div>
         </div>
       </div>
       
 
     @yield('footer')
-    @include('layouts.footer')
 
 </body>
 

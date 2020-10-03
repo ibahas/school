@@ -36,8 +36,8 @@
             <div class="card-header card-header-primary ">
                 <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item">
-                        <h4 class="card-title">إضافة بلاغ جديد</h4>
-                        <p class="card-category"></p>
+                        <h4 class="card-title" style="float: right !important">إضافة بلاغ جديد للطالب :: {{App\students::find($findStudent->id)->name}}</h4>
+                    <p class="card-category" style="float: right !important"></p>
                     </li>
                 </ul>
             </div>

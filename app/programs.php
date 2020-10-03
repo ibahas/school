@@ -17,7 +17,9 @@ class programs extends Model
          'title',
          'description',
          'user_id',
-         'status'
+         'status',
+         'date_start',
+         'expires_at',
      ];
 
      

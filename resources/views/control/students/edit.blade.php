@@ -23,11 +23,6 @@
 @section('content')
 
 <div class="row">
-    <div class="tab">
-        <a href="{{ url()->previous() }}">ADD</a>
-    </div>
-</div>
-<div class="row">
     <div class="card">
         <div class="card-body">
             <div class="card-header card-header-primary ">
