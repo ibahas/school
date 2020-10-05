@@ -42,6 +42,7 @@
             <th>عنوان البرنامج</th>
             <th>تفاصيل البرنامج</th>
             <th>من طرف</th>
+            <th>تاريخ  عمل البرنامج</th>
             <th>العمليات</th>
         </thead>
         <tbody>
@@ -50,6 +51,7 @@
                 <td>{{$row->title}}</td>
                 <td>{{$row->description}}</td>
                 <td>{{App\User::find($row->user_id)->name}}</td>
+                <td style="width: 25%">{{$row->date_start}} - {{$row->expires_at}}</td>
                 <td>
                     <a href="{{action('ProgramsController@edit',$row->id)}}">تعديل</a>
                     <br>

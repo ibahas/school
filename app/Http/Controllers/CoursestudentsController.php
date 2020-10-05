@@ -23,6 +23,8 @@ class CoursestudentsController extends Controller
     public function index()
     {
         //
+        $data = coursestudents::orderBy('id', 'DESC')->get();
+        return view('control.coursestudents.index', compact('data'));
     }
 
     /**

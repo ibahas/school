@@ -27,56 +27,104 @@
 @extends('layouts.app')
 @section('content')
 
-<form action="{{route('storeUser')}}" method="post">
-    @csrf
-    <input type="text" name="name" id="name" placeholder="name" value="{{ old('name') }}" required autocomplete="name"
-        autofocus>
-    @error('name')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    <input type="text" name="email" id="email" value="{{ old('email') }}" required autocomplete="email">
-    @error('email')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    <input type="date" name="bod" id="bod" placeholder="bod" value="{{ old('bod') }}" required autocomplete="bod">
-    @error('bod')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    <input type="text" name="address" id="address" placeholder="address" value="{{ old('address') }}" required
-        autocomplete="address">
-    @error('address')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    <input type="text" name="photo" id="photo" placeholder="photo" value="{{ old('photo') }}" required
-        autocomplete="photo">
-    <input type="number" name="phone" id="phone" placeholder="phone" value="{{ old('phone') }}" required
-        autocomplete="phone">
-    <input type="number" name="role" id="role" placeholder="role" value="{{ old('role') }}" required
-        autocomplete="role">
-    @error('role')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    <input type="password" name="password" id="password" placeholder="password" value="{{ old('password') }}" required
-        autocomplete="password">
-    @error('password')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-    <div class="col-md-6">
-        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required
-            autocomplete="new-password" placeholder="C_password">
+
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header card-header-primary ">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="nav-item">
+                        <h4 class="card-title" style="float: right !important">إضافة مستخدم جديد</h4>
+                    <p class="card-category" style="float: right !important"></p>
+                    </li>
+                </ul>
+            </div>
+
+            <br>
+            <br>
+            <form action="{{route('storeUser')}}" method="post"  enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control"  type="text" name="name" id="name" placeholder="إسم المستخدم" value="{{ old('name') }}" required autocomplete="name"
+                            autofocus>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="البريد الإلكتروني"  type="text" name="email" id="email" value="{{ old('email') }}" required autocomplete="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control"  type="date" name="bod" id="bod" placeholder="تاريخ الميلاد" value="{{ old('bod') }}" required autocomplete="bod">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control"  type="text" name="address" id="address" placeholder="العنوان" value="{{ old('address') }}" required
+                            autocomplete="address">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-file-upload form-file-multiple">
+                            <input type="file" multiple="" name="photo" class="inputFileHidden">
+                            <div class="input-group">
+                                <input type="text" class="form-control inputFileVisible" placeholder="الصورة">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-fab btn-round btn-primary">
+                                        <i class="material-icons">attach_file</i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control"  type="number" name="phone" id="phone" placeholder="رقم الجوال" value="{{ old('phone') }}" required
+                              autocomplete="phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select class="form-control thisNotAllowFirstOption" name="role" id="role"
+                                aria-describedby="pearint_id" value="{{old('role')}}">
+                                <option selected="true" disabled="disabled">إختار الصلاحية</option>
+                                <option value="1">مدير</option>
+                                <option value="2">مشرف</option>
+                                <option value="3">محفظظ</option>
+                                <option value="4">ولي أمر</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control"  type="password" name="password" id="password" placeholder="كلمت المرور" value="{{ old('password') }}" required
+                                autocomplete="password">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input id="password-confirm" type="password" class="form-control"  name="password_confirmation" required
+                                autocomplete="new-password" placeholder="تأكيد كلمت المرور">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">إضافة</button>
+            </form>
+
+        </div>
     </div>
-    <button type="submit">ADD</button>
-</form>
+</div>
 @endsection

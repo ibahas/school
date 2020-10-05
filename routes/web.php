@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //     المحفظين ... Users والأدمن والأباء  ..... .... .......
 Route::group(['prefix' => 'users', 'middleware' => 'auth', 'namespace' => 'user'], function () {
     Route::get('/', 'UsersController@index');
+    Route::get('/teacher', 'UsersController@showAllTeacher');
     Route::get('/show', 'UsersController@show');
     Route::get('/create', 'UsersController@create')->name('createUser');
     Route::post('/store', 'UsersController@store')->name('storeUser');
@@ -49,6 +50,9 @@ Route::group(['middleware' => 'auth'], function () {
 // أيام عمل البرنامج  ... dateworkprograms
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/dateworkprograms', 'DateworkprogramsController');
+    Route::get('/dateworkprograms/{idProgram}/{idStudent}', 'DateworkprogramsController@programWithStudent')->name('programWithStudent');
+    Route::get('/dateworkprograms/create/{id}', 'DateworkprogramsController@create')->name('createDateWorkProgram');
+    Route::post('dateworkprograms/updateAll','DateworkprogramsController@updateAll');
 });
 
 // حضور الموظفين ... stafftime

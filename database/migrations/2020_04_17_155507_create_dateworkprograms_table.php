@@ -25,6 +25,11 @@ class CreateDateworkprogramsTable extends Migration
             $table->foreign('student_id')->references('id')->on('students')
                 ->onDelete('cascade');
 
+            $table->bigInteger('program_id')->unsigned()->nullable();
+            $table->foreign('program_id')->references('id')->on('programs')
+                ->onDelete('cascade');
+                $table->string('from')->nullable();
+                $table->string('to')->nullable();
 
             $table->string('evaluation')->nullable();
             $table->integer('status');

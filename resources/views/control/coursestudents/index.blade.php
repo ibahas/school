@@ -27,43 +27,20 @@
 
 @extends('layouts.app')
 @section('content')
-
-<div class="row">
-    <div class="tab">
-        <div class="nav">
-            <ul class="navbar-nav">
-            <li class="nav-item"></li>
-            <a class="nav-link" href="{{action('StudentsController@create')}}">
-                <p>
-                <i class="material-icons">person_add</i>
-                إضافة طالب</p>
-            </a>
-            </ul>
-        </div>
-    </div>
-</div>
 <div class="row">
     <table class="table" id="funSearch">
         <thead>
-            <th>الإسم</th>
-            <th>تاريخ الميلاد</th>
-            <th>رقم الجوال</th>
-            <th>أخر درجة</th>
-            <th>المحفظ</th>
-            <th>الأب</th>
-            <th>البرنامج الحالي</th>
+            <th>إسم الطالب</th>
+            <th>الدورة</th>
+            <th>من طرف</th>
             <th>العمليات</th>
         </thead>
         <tbody>
             @foreach ($data as $row)
             <tr scope="row">
-                <td>{{$row->name}}</td>
-                <td>{{$row->bod}}</td>
-                <td>0{{$row->phone}}</td>
-                <td>{{$row->rating}}</td>
-                <td>{{App\User::find($row->wallet_id)->name}}</td>
-                <td>{{App\User::find($row->pearint_id)->name}}</td>
-                <td>{{App\programs::find($row->program_id)->title}}</td>
+                <td>{{App\students::find($row->student_id)->name}}</td>
+                <td>{{App\courses::find($row->course_id)->title}}</td>
+                <td>{{App\User::find($row->user_id)->name}}</td>
                 <td>
                     <a href="{{action('StudentsController@edit',$row->id)}}">تعديل</a>
                     <br>

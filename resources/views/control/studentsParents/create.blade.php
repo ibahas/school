@@ -63,8 +63,6 @@
                     <input type="hidden" name="student" value="{{$findStudent->id}}">
                     <button type="submit" class="btn btn-info">إضافة</button>
                 </form>
-
-
         </div>
     </div>
 </div>

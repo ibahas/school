@@ -4,12 +4,19 @@
     @yield('header')
     @include('layouts.header')
     @if (Request::is('*/edit'))
-    <style>
-        label{
-          float: right !important;
-        }
-    </style>
+
     @endif
+
+    <style>
+      .bmd-form-group .bmd-label-static {
+        position: relative !important;
+          right: 0 !important;
+        }
+        .form-group .bmd-label-static {
+              top: 10px !important;
+          }
+    </style>
+
 </head>
 
 <body dir="rtl" id="app">
@@ -35,6 +42,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style=" position: absolute; right: -172%; ">
                   <a class="dropdown-item" href="{{action('user\UsersController@index')}}">
+                    <i class="material-icons">people</i>{{ __('جميع المستخدمين')}}</a>
+                  <a class="dropdown-item" href="{{action('user\UsersController@showAllTeacher')}}">
                     <i class="material-icons">people</i>{{ __('المحفظين')}}</a>
                     <a class="dropdown-item" href="{{action('user\UsersController@showAllParents')}}">
                       <i class="material-icons">people</i>{{ __('الأباء')}}</a>
@@ -62,7 +71,7 @@
                     <p>{{ _('حضور المحفظين')}}</p>
                   </a>
                 </li>
-                <li class="nav-item  {{ Request::is('courses*') ? 'active' : '' }}  ">
+                <li class="nav-item  {{ Request::is('courses*') || Request::is('courses/*')  ? 'active' : '' }}  ">
                   <a class="nav-link " href="{{url('courses')}}">
                     <i class="material-icons">group_work</i>
                     <p>{{ _('الدورات')}}</p>
@@ -165,7 +174,42 @@
       
 
     @yield('footer')
+      <script>
+                  // FileInput
+            $('.form-file-simple .inputFileVisible').click(function() {
+              $(this).siblings('.inputFileHidden').trigger('click');
+            });
 
+            $('.form-file-simple .inputFileHidden').change(function() {
+              var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+              $(this).siblings('.inputFileVisible').val(filename);
+            });
+
+            $('.form-file-multiple .inputFileVisible, .form-file-multiple .input-group-btn').click(function() {
+              $(this).parent().parent().find('.inputFileHidden').trigger('click');
+              $(this).parent().parent().addClass('is-focused');
+            });
+
+            $('.form-file-multiple .inputFileHidden').change(function() {
+              var names = '';
+              for (var i = 0; i < $(this).get(0).files.length; ++i) {
+                if (i < $(this).get(0).files.length - 1) {
+                  names += $(this).get(0).files.item(i).name + ',';
+                } else {
+                  names += $(this).get(0).files.item(i).name;
+                }
+              }
+              $(this).siblings('.input-group').find('.inputFileVisible').val(names);
+            });
+
+            $('.form-file-multiple .btn').on('focus', function() {
+              $(this).parent().siblings().trigger('focus');
+            });
+
+            $('.form-file-multiple .btn').on('focusout', function() {
+              $(this).parent().siblings().trigger('focusout');
+            });
+      </script>
 </body>
 
 </html>

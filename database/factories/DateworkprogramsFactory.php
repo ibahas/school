@@ -12,5 +12,7 @@ $factory->define(dateworkprograms::class, function (Faker $faker) {
         'evaluation' => Rand(1,10),
         'student_id' => Rand(1,10),
         'status' => Rand(0,1),
+        'user_id' => Rand(1,10),
+        'program_id' => Rand(1,10),
     ];
 });

@@ -29,14 +29,6 @@
 @section('content')
 
 <div class="row">
-    <div class="tab">
-        <a href="{{action('ProgramsController@create')}}">
-            <i class="material-icons">add_circle_outline</i>
-            إضافة برنامج جديد 
-    </a>
-    </div>
-</div>
-<div class="row">
     <table class="table" style="overflow: hidden" id="funSearch">
         <thead>
             <th>المحفظ</th>

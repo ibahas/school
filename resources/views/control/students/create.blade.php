@@ -67,13 +67,14 @@ $('#blah').click(function (e) {
                     </li>
                 </ul>
             </div>
+            <br>
+            <br>
             <form action="{{action('StudentsController@store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <form>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name" style="float: right !important">إسم الطالب</label>
                                 <input type="text" class="form-control name" name="name" id="name"
                                     aria-describedby="name" placeholder="إسم الطالب" required autocomplete="name"
                                     value="{{old('name')}}">
@@ -81,7 +82,6 @@ $('#blah').click(function (e) {
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name" style="float: right !important">إسم الطالب</label>
                                 <input type="date" class="form-control" name="bod" id="bod" aria-describedby="bod"
                                     placeholder="تاريخ الميلاد" required autocomplete="bod" value="{{old('bod')}}">
                             </div>
@@ -89,42 +89,41 @@ $('#blah').click(function (e) {
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name" style="float: right !important">إسم الطالب</label>
                                 <input type="text" class="form-control" name="phone" id="phone" aria-describedby="phone"
                                     placeholder="رقم جوال الطالب" required autocomplete="phone" value="{{old('phone')}}">
                             </div>
         
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="imgInp" style="float: right !important">صورة الطالب</label>
-                                <input type="file" class="form-control" name="photo" id="imgInp" aria-describedby="photo"
-                                    value="{{old('photo')}}">
-                                    <img id="blah" height="180px" width="300px" src="{{url('image/students/icon/std.png')}}" alt="your image" />
-                            </div>
-        
+                            <div class="form-group form-file-upload form-file-multiple">
+                                <input type="file" name="photo" class="inputFileHidden">
+                                <div class="input-group">
+                                    <input type="text" class="form-control inputFileVisible" placeholder="الصورة">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-fab btn-round btn-primary">
+                                            <i class="material-icons">attach_file</i>
+                                        </button>
+                                    </span>
+                                </div>
+                              </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="address" style="float: right !important">عنوان الطالب</label>
                                 <input type="text" class="form-control" name="address" id="address" aria-describedby="address"
                                     placeholder="عنوان الطالب" required autocomplete="address" value="{{old('address')}}">
                             </div>
-        
-        
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name" style="float: right !important">إختار المحفظ</label>
                                 <select class="form-control thisNotAllowFirstOption" name="wallet_id" id="wallet_id"
                                     aria-describedby="wallet_id" required autocomplete="allUsers" value="{{old('wallet_id')}}">
                                     <option selected="true" disabled="disabled">إختار المحفظ</option>
-                                    @foreach($allUsers as $user)
-                                    @if($user->role == 3)
-                                    <option value="{{$user->id}}" @if(old('wallet_id')==$user->id) selected
-                                        @endif>{{$user->name}}</option>
-                                    @endif
-                                    @endforeach
+                                        @foreach($allUsers as $user)
+                                        @if($user->role == 3)
+                                        <option value="{{$user->id}}" @if(old('wallet_id')==$user->id) selected
+                                            @endif>{{$user->name}}</option>
+                                        @endif
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -132,7 +131,6 @@ $('#blah').click(function (e) {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pearint_id" style="float: right !important">إختار الأب</label>
                                 <select class="form-control thisNotAllowFirstOption" name="pearint_id" id="pearint_id"
                                     aria-describedby="pearint_id" value="{{old('pearint_id')}}">
                                     <option selected="true" disabled="disabled">إختار الأب</option>
@@ -148,7 +146,6 @@ $('#blah').click(function (e) {
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="program_id" style="float: right !important">إختار البرنامج</label>
                                 <select class="form-control thisNotAllowFirstOption" name="program_id" id="program_id"
                                     aria-describedby="pearint_id" value="{{old('program_id')}}">
                                     <option selected="true" disabled="disabled">إختار البرنامج</option>

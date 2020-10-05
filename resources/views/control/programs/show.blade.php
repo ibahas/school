@@ -9,7 +9,7 @@
 
 @extends('layouts.app')
 @section('content')
-
+<a href="{{route('createDateWorkProgram',$data->id)}}">إضافة اسبوع عمل</a>
 <div class="row" dir="rtl">
       <div class="card">
         <div class="card-body">
@@ -49,6 +49,8 @@
                 <td>{{App\User::find($student->pearint_id)->name}}</td>
                 <td>{{App\programs::find($student->program_id)->title}}</td>
                 <td>
+                <a href="{{route('programWithStudent',[$data->id,$student->id])}}">عرض أيام العمل</a>
+                <br>
                     <a href="{{action('StudentsController@edit',$student->id)}}">تعديل</a>
                 </td>
             </tr>

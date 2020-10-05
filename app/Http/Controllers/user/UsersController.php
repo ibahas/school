@@ -173,4 +173,16 @@ class UsersController extends Controller
             return redirect('users');
         }
     }
+
+    public function showAllTeacher()
+    {
+        //
+        if (Auth::user()->role == 1) {
+            $data = User::all();
+            return view('user.teacher', compact('data'));
+        } else {
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect()->back();
+        }
+    }
 }

@@ -36,115 +36,58 @@
             <div class="card-header card-header-primary ">
                 <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item">
-                        <h4 class="card-title">إضافة طالب جديد</h4>
+                    <h4 class="card-title">إضافة أيام عمل للبرنامج :: {{$program->title}}</h4>
                         <p class="card-category"></p>
                     </li>
                 </ul>
             </div>
-            <form action="{{action('StudentsController@store')}}" method="post" enctype="multipart/form-data">
+            <br>
+            <form action="{{action('DateworkprogramsController@store')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control name" name="name" id="name"
-                                    aria-describedby="name" placeholder="إسم الطالب" required autocomplete="name"
-                                    value="{{old('name')}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                <button type="button" class="btn btn-success" id="btnAddWeek">
+                    <i class="material-icons">add</i>
+                </button>
+                <div id="week1">
+                </div>
+                <div id="newWeeks">
 
-                            <div class="form-group">
-                                <input type="date" class="form-control" name="bod" id="bod" aria-describedby="bod"
-                                    placeholder="تاريخ الميلاد" required autocomplete="bod" value="{{old('bod')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="phone" id="phone" aria-describedby="phone"
-                                    placeholder="رقم جوال الطالب" required autocomplete="phone" value="{{old('phone')}}">
-                            </div>
-        
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="file" class="form-control" name="photo" id="photo" aria-describedby="photo"
-                                    value="{{old('photo')}}">
-                            </div>
-        
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="address" id="address" aria-describedby="address"
-                                    placeholder="عنوان الطالب" required autocomplete="address" value="{{old('address')}}">
-                            </div>
-        
-        
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select class="form-control thisNotAllowFirstOption" name="wallet_id" id="wallet_id"
-                                    aria-describedby="wallet_id" required autocomplete="allUsers" value="{{old('wallet_id')}}">
-                                    <option selected="true" disabled="disabled">إختار المحفظ</option>
-
-                                    @foreach($allUsers as $user)
-                                    @if($user->role == 3)
-                                    <option value="{{$user->id}}" @if(old('wallet_id')==$user->id) selected
-                                        @endif>{{$user->name}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>  
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select class="form-control thisNotAllowFirstOption" name="pearint_id" id="pearint_id"
-                                    aria-describedby="pearint_id" value="{{old('pearint_id')}}">
-                                    <option selected="true" disabled="disabled">إختار الأب</option>
-                                    @foreach($allUsers as $user)
-                                    @if($user->role == 4)
-                                    <option value="{{$user->id}}" @if(old('pearint_id')==$user->id) selected @endif
-                                        >{{$user->name}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select class="form-control thisNotAllowFirstOption" name="program_id" id="program_id"
-                                    aria-describedby="pearint_id" value="{{old('program_id')}}">
-                                    <option selected="true" disabled="disabled">إختار البرنامج</option>
-
-                                    @foreach($programs as $program)
-                                    <option value="{{$program->id}}" @if(old('program_id')==$program->id) selected @endif
-                                        >{{$program->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                
-
-                
-
-                
-
-
-
-
-
-                    <button type="submit" class="btn btn-info">إضافة</button>
-                </form>
-
-
+                </div>
+                <input type="number" name="thisProgram" value="{{$program->id}}" hidden>
+                <button type="submit" class="btn btn-info">إضافة</button>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var NoPlus = 2;
+        $('#btnAddWeek').click(function (e) { 
+            e.preventDefault();
+            $('#newWeeks').append('<div id="week'+ NoPlus +'"><p class="float-right" style="margin-right: 1rem" onClick="funDelete('+NoPlus+')"> الإسبوع '+ NoPlus +' </p> ');
+            for(var i = 1; i <= 7 ; i++){
+                 if(i == 1){
+                    $('#week' + NoPlus).append('<br><br> <div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                }else{
+                    $('#week' + NoPlus).append('<div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                }
+            }
+
+            NoPlus++;
+       });
+    });
+    
+    $(document).ready(function () {
+        $('#week1').append('<div ><p class="float-right" style="margin-right: 1rem" onClick="funDelete(1)"> الإسبوع 1 </p> ');
+        for(var i = 1; i <= 7 ; i++){
+                if(i == 1){
+                    $('#week1').append('<br><br> <div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                }else{
+                    $('#week1').append('<div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                }
+        }
+    });
+</script>
 
 
 @endsection

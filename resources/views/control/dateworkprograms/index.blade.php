@@ -45,25 +45,23 @@
 <div class="row">
     <table class="table" id="funSearch">
         <thead>
-            <th>الإسم</th>
-            <th>تاريخ الميلاد</th>
-            <th>رقم الجوال</th>
-            <th>أخر درجة</th>
-            <th>المحفظ</th>
-            <th>الأب</th>
-            <th>البرنامج الحالي</th>
+            <th>الطالب</th>
+            <th>اليوم</th>
+            <th>التقييم</th>
+            <th>الحالة</th>
+            <th>من طرف</th>
+            <th>البرنامج</th>
             <th>العمليات</th>
         </thead>
         <tbody>
             @foreach ($data as $row)
             <tr scope="row">
-                <td>{{$row->name}}</td>
-                <td>{{$row->bod}}</td>
-                <td>0{{$row->phone}}</td>
-                <td>{{$row->rating}}</td>
-                <td>{{App\User::find($row->wallet_id)->name}}</td>
-                <td>{{App\User::find($row->pearint_id)->name}}</td>
-                <td>{{App\programs::find($row->program_id)->title}}</td>
+                <td>{{App\students::find($row->student_id)->name}}</td>
+                <td>{{$row->date}}</td>
+                <td>{{$row->evaluation}}</td>
+                <td>{{$row->status}}</td>
+                <td>{{App\User::find($row->user_id)->name}}</td>
+                <td>{{$row->program_id}}</td>
                 <td>
                     <a href="{{action('StudentsController@edit',$row->id)}}">تعديل</a>
                     <br>

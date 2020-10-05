@@ -8,7 +8,7 @@
   $(document).ready(function () {
       $(".sweet-overlay").fadeTo(2000, 500).slideUp(500, function () {
           $(".sweet-overlay").slideUp(500);
-      });
+      });س
       $(".sweet-alert").fadeTo(2000, 500).slideUp(500, function () {
           $(".sweet-alert").slideUp(500);
       });
@@ -52,14 +52,24 @@
         </thead>
         <tbody>
             @foreach ($data as $row)
+            @if($row->role == 3)
             <tr scope="row">
                 <td>{{$row->name}}</td>
                 <td>{{$row->phone}}</td>
                 <td>{{$row->email}}</td>
                 <td>
-                    
+                <form action="{{action('StafftimeController@store')}}" method="post" onchange="submit()">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{$row->id}}">
+                    <select name="state" >
+                        <option aria-disabled="true" disabled selected>الحضور</option>
+                        <option value="1">حضور</option>
+                        <option value="2">غياب</option>
+                    </select>
+                </form>
                 </td>
             </tr>
+            @endif
             @endforeach
         </tbody>
     </table>
