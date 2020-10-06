@@ -61,7 +61,7 @@
                 <td>{{$row->evaluation}}</td>
                 <td>{{$row->status}}</td>
                 <td>{{App\User::find($row->user_id)->name}}</td>
-                <td>{{$row->program_id}}</td>
+                <td>{{App\programs::find($row->program_id)->title}}</td>
                 <td>
                     <a href="{{action('StudentsController@edit',$row->id)}}">تعديل</a>
                     <br>

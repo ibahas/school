@@ -30,7 +30,7 @@
           <th>الإسم</th>
           <th>تاريخ الميلاد</th>
           <th>رقم الجوال</th>
-          <th>أخر درجة</th>
+          {{-- <th>أخر درجة</th> --}}
           <th>المحفظ</th>
           <th>الأب</th>
           <th>البرنامج الحالي</th>
@@ -42,7 +42,7 @@
               <td>{{$row->name}}</td>
               <td>{{$row->bod}}</td>
               <td>0{{$row->phone}}</td>
-              <td>{{$row->rating}}</td>
+              {{-- <td>{{$row->rating}}</td> --}}
               <td>{{App\User::find($row->wallet_id)->name}}</td>
               <td>{{App\User::find($row->pearint_id)->name}}</td>
               <td>{{App\programs::find($row->program_id)->title}}</td>

@@ -52,7 +52,7 @@
                 <div id="newWeeks">
 
                 </div>
-                <input type="number" name="thisProgram" value="{{$program->id}}" hidden>
+                <input required type="number" name="thisProgram" value="{{$program->id}}"  hidden>
                 <button type="submit" class="btn btn-info">إضافة</button>
             </form>
         </div>
@@ -67,9 +67,9 @@
             $('#newWeeks').append('<div id="week'+ NoPlus +'"><p class="float-right" style="margin-right: 1rem" onClick="funDelete('+NoPlus+')"> الإسبوع '+ NoPlus +' </p> ');
             for(var i = 1; i <= 7 ; i++){
                  if(i == 1){
-                    $('#week' + NoPlus).append('<br><br> <div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                    $('#week' + NoPlus).append('<br><br> <div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input required type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input required type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input required type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
                 }else{
-                    $('#week' + NoPlus).append('<div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                    $('#week' + NoPlus).append('<div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input required type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input required type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input required type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
                 }
             }
 
@@ -81,9 +81,9 @@
         $('#week1').append('<div ><p class="float-right" style="margin-right: 1rem" onClick="funDelete(1)"> الإسبوع 1 </p> ');
         for(var i = 1; i <= 7 ; i++){
                 if(i == 1){
-                    $('#week1').append('<br><br> <div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                    $('#week1').append('<br><br> <div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input required type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input required type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input required type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
                 }else{
-                    $('#week1').append('<div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
+                    $('#week1').append('<div class="row"> <div class="col-1"></div> <div class="col-8"> <div class="form-group"> <label for="date'+ i +'">تاريخ اليوم</label> <input required type="date" id="date'+ i +'" name="date[]" /> <label for="from'+ i +'">من</label> <input required type="text" id="from'+ i +'" name="from[]" /> <label for="to'+ i +'">إلى</label> <input required type="text" id="to'+ i +'" name="to[]" /> </div> </div> </div></div>').hide().show('slow');
                 }
         }
     });

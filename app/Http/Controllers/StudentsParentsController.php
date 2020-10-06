@@ -64,7 +64,7 @@ class StudentsParentsController extends Controller
         // dd($data);
         studentsParents::create($data);
         alert()->success('تم إضافة البلاغ بنجاح');
-        return redirect('studentsParents');
+        return redirect('reportStudents');
     }
 
     /**

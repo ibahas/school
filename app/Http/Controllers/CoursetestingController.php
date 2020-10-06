@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\courses;
+use App\coursestudents;
 use App\coursetesting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoursetestingController extends Controller
 {
@@ -23,6 +26,8 @@ class CoursetestingController extends Controller
     public function index()
     {
         //
+        $data = coursetesting::orderBy('id', 'DESC')->get();
+        return view('control.coursetesting.index', compact('data'));
     }
 
     /**
@@ -30,9 +35,14 @@ class CoursetestingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $course = courses::find($id);
+        // dd($course);
+        $coursestudents = coursestudents::where('course_id',$id)->get();
+        // dd($coursestudents);
+        return view('control.coursetesting.create', compact('course','coursestudents'));
     }
 
     /**
@@ -44,6 +54,19 @@ class CoursetestingController extends Controller
     public function store(Request $request)
     {
         //
+        foreach ($request->input('rating') as $ii => $value) {
+
+            $data = [
+                'course_id' => $request->course_id,
+                'rating' => $request->input('rating')[$ii],
+                'student_id' => $request->input('student_id')[$ii],
+                'status' => 1,
+                'user_id' => Auth::user()->id,
+            ];
+            coursetesting::create($data);
+        }
+        alert()->success('تم إضافة علامة الدورة  بنجاح للطلاب');
+        return redirect()->back();
     }
 
     /**

@@ -36,115 +36,56 @@
             <div class="card-header card-header-primary ">
                 <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item">
-                        <h4 class="card-title">إضافة طالب جديد</h4>
+                    <h4 class="card-title">إضافة أيام عمل للدورة :: {{$findThisCourse->title}}</h4>
                         <p class="card-category"></p>
                     </li>
                 </ul>
             </div>
-            <form action="{{action('StudentsController@store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{action('PresencecoursesController@store')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control name" name="name" id="name"
-                                    aria-describedby="name" placeholder="إسم الطالب" required autocomplete="name"
-                                    value="{{old('name')}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                    <input type="hidden" name="course_id" value="{{$findThisCourse->id}}">
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>*</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="thisIndex_1">1</td>
+                                <td> <input required type="date" name="date[]"> </td>
+                            </tr>
 
-                            <div class="form-group">
-                                <input type="date" class="form-control" name="bod" id="bod" aria-describedby="bod"
-                                    placeholder="تاريخ الميلاد" required autocomplete="bod" value="{{old('bod')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="phone" id="phone" aria-describedby="phone"
-                                    placeholder="رقم جوال الطالب" required autocomplete="phone" value="{{old('phone')}}">
-                            </div>
-        
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="file" class="form-control" name="photo" id="photo" aria-describedby="photo"
-                                    value="{{old('photo')}}">
-                            </div>
-        
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="address" id="address" aria-describedby="address"
-                                    placeholder="عنوان الطالب" required autocomplete="address" value="{{old('address')}}">
-                            </div>
-        
-        
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select class="form-control thisNotAllowFirstOption" name="wallet_id" id="wallet_id"
-                                    aria-describedby="wallet_id" required autocomplete="allUsers" value="{{old('wallet_id')}}">
-                                    <option selected="true" disabled="disabled">إختار المحفظ</option>
-
-                                    @foreach($allUsers as $user)
-                                    @if($user->role == 3)
-                                    <option value="{{$user->id}}" @if(old('wallet_id')==$user->id) selected
-                                        @endif>{{$user->name}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>  
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select class="form-control thisNotAllowFirstOption" name="pearint_id" id="pearint_id"
-                                    aria-describedby="pearint_id" value="{{old('pearint_id')}}">
-                                    <option selected="true" disabled="disabled">إختار الأب</option>
-                                    @foreach($allUsers as $user)
-                                    @if($user->role == 4)
-                                    <option value="{{$user->id}}" @if(old('pearint_id')==$user->id) selected @endif
-                                        >{{$user->name}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <select class="form-control thisNotAllowFirstOption" name="program_id" id="program_id"
-                                    aria-describedby="pearint_id" value="{{old('program_id')}}">
-                                    <option selected="true" disabled="disabled">إختار البرنامج</option>
-
-                                    @foreach($programs as $program)
-                                    <option value="{{$program->id}}" @if(old('program_id')==$program->id) selected @endif
-                                        >{{$program->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                
-
-                
-
-                
-
-
-
-
-
+                        </tbody>
+                    </table>
+                    <button type="button" class="float-right btn btn-success" id="addDay">إضافة يوم</button>
                     <button type="submit" class="btn btn-info">إضافة</button>
-                </form>
+                
+            </form>
 
 
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.thisIndex').each(function (index, element) {
+            // element == this
+            
+            // console.log();
+        });
+        var counter = 2 ;
+
+        $('#addDay').click(function (e) { 
+            e.preventDefault();
+            $('.table>tbody').append('<tr class="thisIndex_' + counter + '" id="' + counter + '"><td>' + counter + '</td><td><input required type="date" name="date[]"></td></tr>');
+            counter++;
+        });
+    });
+</script>
 
 
 @endsection

@@ -22,18 +22,29 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //     المحفظين ... Users والأدمن والأباء  ..... .... .......
 Route::group(['prefix' => 'users', 'middleware' => 'auth', 'namespace' => 'user'], function () {
+    // الصفحة الرئيسية
     Route::get('/', 'UsersController@index');
+    // عرض جميع المحفظين
     Route::get('/teacher', 'UsersController@showAllTeacher');
+    // بيانات المستخدم
     Route::get('/show', 'UsersController@show');
+    //إضافة مستخدم جديد
     Route::get('/create', 'UsersController@create')->name('createUser');
+    //حفقط المستخدم
     Route::post('/store', 'UsersController@store')->name('storeUser');
+    //تحديث كلمت المورو
     Route::post('/updatePassword/{id}', 'UsersController@updatePassword')->name('updatePassword');
+    //تحديث الصورة
     Route::put('/updatephoto/{id}', 'UsersController@updatePhoto')->name('updatephoto');
+    //تحديث المعلومات الشخصية
     Route::put('/userupdate', 'UsersController@updateInfoUser')->name('userupdate');
+    //حذف مستخدم معين
     Route::post('/destroy/{id}', 'UsersController@destroy')->name('destroyUser');
+    //جميع الأباء
     Route::get('/parents', 'UsersController@showAllParents')->name('showAllParents');
 });
 
+//للمحفظ
 // طلابي ... teacherstudents
 Route::get('teacherstudents', 'TeacherstudentsController@index');
 
@@ -49,10 +60,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 // أيام عمل البرنامج  ... dateworkprograms
 Route::group(['middleware' => 'auth'], function () {
+    //عرض جميع أيام عمل البرامج
     Route::resource('/dateworkprograms', 'DateworkprogramsController');
-    Route::get('/dateworkprograms/{idProgram}/{idStudent}', 'DateworkprogramsController@programWithStudent')->name('programWithStudent');
+    //إضافة يوم عمل برنامج لجميع طلاب البرنامج
     Route::get('/dateworkprograms/create/{id}', 'DateworkprogramsController@create')->name('createDateWorkProgram');
-    Route::post('dateworkprograms/updateAll','DateworkprogramsController@updateAll');
+    //عرض أيام عمل برنامج بواسطة الأي دي البرنامج والأيدي الطالب .
+    Route::get('/dateworkprograms/{idProgram}/{idStudent}', 'DateworkprogramsController@programWithStudent')->name('programWithStudent');
+    //تحديث جميع أيام عمل البرنامج 
+    Route::post('/dateworkprograms/updateAll', 'DateworkprogramsController@updateAll');
 });
 
 // حضور الموظفين ... stafftime
@@ -73,27 +88,50 @@ Route::group(['middleware' => 'auth'], function () {
 //    الدورات ... courses
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/courses', 'CoursesController');
+    Route::get('/courses/showStudent/{idCourses}/{idStudent}', 'CoursesController@showDetailsStudentCourses');
 });
 
 //    طلاب الدورات ... coursestudents
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/coursestudents', 'CoursestudentsController');
+    //إضافة الطلاب للدورات عن طريق الأي دي الدورة
+    Route::get('/coursestudents/{id}/create', 'CoursestudentsController@create');
+    //تحديث أيام الدورة
+    Route::post('/coursestudents/updateall', 'CoursestudentsController@updateAllRows');
 });
 
 //    حضور الدورات ... presencecourses
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/presencecourses', 'PresencecoursesController');
+    //إضافة  حضور أيام عمل الدورة
+    Route::get('/presencecourses/{id}/create', 'PresencecoursesController@create');
+    //عرض أيام عمل الدورة بواسطة الأي دي الدورة و أيدي الطالب
+    Route::get('/presencecourses/showStudent/{idCourses}/{idStudent}', 'PresencecoursesController@showDetailsStudent');
+    //تحديث أيام عمل الدورة
+    Route::post('/presencecourses/updateStudent', 'PresencecoursesController@updateStudentPresence');
 });
 
 //    إختبار الدورات ... coursetesting
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/coursetesting', 'CoursetestingController');
+    //إضافة درجة الإختبار
+    Route::get('/coursetesting/create/{id}', 'CoursetestingController@create');
 });
 
 //   بلاغات الطالب للأب ... studentsParents ...... reportStudents تحديث للViews.
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/reportStudents', 'StudentsParentsController');
+    //إضافة بلاغ  عن طريق الأيدي  الطالب ليظهر للأب وللمحفظ وللمدير
     Route::get('/reportStudents/create/{id}', 'StudentsParentsController@create')->name('createReport');
+});
+
+/**
+ * parent
+ * الأباء
+ */
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/presencestudents/{id}', 'PresencestudentsController@showPresentParentChildren');
 });
 
     /*

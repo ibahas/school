@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\courses;
+use App\coursestudents;
+use App\students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,9 +74,12 @@ class CoursesController extends Controller
      * @param  \App\courses  $courses
      * @return \Illuminate\Http\Response
      */
-    public function show(courses $courses)
+    public function show($id)
     {
         //
+        $courses = courses::find($id);
+        $coursesStds = coursestudents::where('course_id', $id)->get();
+        return view('control.courses.show', compact('courses', 'coursesStds'));
     }
 
     /**
@@ -87,7 +92,7 @@ class CoursesController extends Controller
     {
         //
         $data = courses::find($id);
-        return view('control.courses.edit',compact('data'));
+        return view('control.courses.edit', compact('data'));
     }
 
     /**
@@ -100,13 +105,13 @@ class CoursesController extends Controller
     public function update(Request $request, $id)
     {
         //
-       $data = [
+        $data = [
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request->status,
             'user_id' => Auth::user()->id,
         ];
-        courses::where('id',$id)->update($data);
+        courses::where('id', $id)->update($data);
         alert()->success('تم تحديث الدورة');
         return redirect('courses');
     }
@@ -117,8 +122,20 @@ class CoursesController extends Controller
      * @param  \App\courses  $courses
      * @return \Illuminate\Http\Response
      */
-    public function destroy(courses $courses)
+    public function destroy($id)
     {
         //
+        $courses = courses::find($id);
+        $courses->delete($id);
+        alert()->success('تم حذف الدورة بنجاح');
+        return redirect('courses');
+    }
+    public function showDetailsStudentCourses($idCourses, $idStudent)
+    {
+        //
+        $findCourseStudents = coursestudents::where('course_id', $idCourses)->where('student_id', $idStudent)->get();
+
+        echo $findCourseStudents;
+        exit;
     }
 }

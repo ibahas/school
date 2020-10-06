@@ -48,9 +48,9 @@ class StudentsController extends Controller
         //
         if (Auth::user()->role == 1 || Auth::user()->role == 2) {
 
-            $data = students::all();
-            $allUsers = User::all();
-            $programs = programs::all();
+            $data = students::orderBy('id', 'DESC')->get();
+            $allUsers = User::orderBy('id', 'DESC')->get();
+            $programs = programs::orderBy('id', 'DESC')->get();
             return view('control.students.create', compact('data', 'allUsers', 'programs'));
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية للدخول الى هذه الصفحة');

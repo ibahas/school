@@ -52,16 +52,20 @@ class DateworkprogramsController extends Controller
     public function store(Request $request)
     {
         //
+        request()->validate([
+            'date' => 'required',
+        ]);
         // dd(students::where('program_id',$request->thisProgram)->get());
         $studnetsThisProgram = students::where('program_id', $request->thisProgram)->get();
 
         $studnetsThisProgramCount = students::where('program_id', $request->thisProgram)->count();
         // dd($request->input('to'));
         // exit;
-        for ($i = 0 ; $i <  $studnetsThisProgramCount ; $i++) {
+        // dd($request->input('date'));
+        for ($i = 0; $i <  $studnetsThisProgramCount; $i++) {
             # code...
             // for loop to get the Inputs ..
-         
+
             foreach ($request->input('date') as $ii => $value) {
 
                 $data = [
@@ -79,7 +83,7 @@ class DateworkprogramsController extends Controller
             }
         }
         alert()->success('تم إضافة أيام عمل البرنامج بنجاح');
-        return redirect('program/' . $request->thisProgram);
+        return redirect('programs/' . $request->thisProgram);
     }
 
     /**
@@ -99,9 +103,11 @@ class DateworkprogramsController extends Controller
      * @param  \App\dateworkprograms  $dateworkprograms
      * @return \Illuminate\Http\Response
      */
-    public function edit(dateworkprograms $dateworkprograms)
+    public function edit($id)
     {
         //
+        $data = dateworkprograms::find($id);
+        return view('control.dateworkprograms.edit', compact('data'));
     }
 
     /**
@@ -111,9 +117,22 @@ class DateworkprogramsController extends Controller
      * @param  \App\dateworkprograms  $dateworkprograms
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, dateworkprograms $dateworkprograms)
+    public function update(Request $request, $id)
     {
         //
+        $data = [
+            'date' => $request->date,
+            'user_id' => Auth::user()->id,
+            'from' => $request->from,
+            'to' => $request->to,
+            'evaluation' => $request->evaluation,
+            'status' => $request->status,
+        ];
+        // dd($data);
+        $findThisToRedirect = dateworkprograms::where('id', $id)->first();
+        dateworkprograms::where('id', $id)->update($data);
+        alert()->success('تم تحديث البيانات');
+        return redirect('programs/' . $findThisToRedirect->program_id);
     }
 
     /**
@@ -127,11 +146,12 @@ class DateworkprogramsController extends Controller
         //
     }
     //show all Day Work From Program .
-    public function programWithStudent($idProgram,$idStudent)
+    public function programWithStudent($idProgram, $idStudent)
     {
         //
-        $data = dateworkprograms::where('student_id',$idStudent)->where('program_id',$idProgram)->get();
-        return view('control.dateworkprograms.showByStudentAndProgram',compact('data','idProgram','idStudent'));
+
+        $data = dateworkprograms::where('student_id', $idStudent)->where('program_id', $idProgram)->get();
+        return view('control.dateworkprograms.showByStudentAndProgram', compact('data', 'idProgram', 'idStudent'));
     }
 
     public function updateAll(Request $request)
@@ -141,11 +161,11 @@ class DateworkprogramsController extends Controller
 
             $data = [
                 'evaluation' => $request->input('evaluation')[$ii],
+                'status' => $request->input('status')[$ii],
             ];
             dateworkprograms::where('id', $request->input('id')[$ii])->update($data);
         }
-        alert()->success('تم تعديل التقيم بنجاح');
+        alert()->success('تم تعديل بنجاح');
         return redirect()->back();
     }
-
 }

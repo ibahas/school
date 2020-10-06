@@ -21,15 +21,26 @@ class CreateStudentsTable extends Migration
             $table->string('photo')->nullable();
             $table->string('address');
             $table->string('last_degree')->nullable();
-            $table->bigInteger('wallet_id')->nullable();
-            $table->bigInteger('program_id')->nullable();
+
             $table->string('rating')->nullable();
+
             $table->bigInteger('pearint_id')->unsigned();
             $table->foreign('pearint_id')->references('id')->on('users')
                 ->onDelete('cascade');
+
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
+
+            $table->bigInteger('wallet_id')->unsigned();
+            $table->foreign('wallet_id')->references('id')->on('users')
+                ->onDelete('cascade');
+                
+            $table->bigInteger('program_id');
+            // $table->bigInteger('program_id')->unsigned();
+            // $table->foreign('program_id')->references('id')->on('programs')
+            //     ->onDelete('cascade');
+
             $table->softDeletes();
             $table->timestamps();
         });

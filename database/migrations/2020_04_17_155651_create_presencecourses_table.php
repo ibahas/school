@@ -15,7 +15,7 @@ class CreatePresencecoursesTable extends Migration
     {
         Schema::create('presencecourses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
+            $table->date('date');
             $table->bigInteger('course_id')->unsigned()->nullable();
             $table->foreign('course_id')->references('id')->on('courses')
                 ->onDelete('cascade');

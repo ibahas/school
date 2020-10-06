@@ -10,13 +10,16 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="text-center">
-        <div class="all">
-            <a href="/products/all">All Products</a>
-        </div>
-        <div class="alert">
-            Weleocme ...
-        </div>
+    <div class="row">
+        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+            @include('control.model.modelAdmin')
+        @endif
+        @if (Auth::user()->role == 3)
+            @include('control.model.modelTeacher')
+        @endif
+        @if (Auth::user()->role == 4)
+            @include('control.model.modelParent')
+        @endif
     </div>
 </div>
     @endsection

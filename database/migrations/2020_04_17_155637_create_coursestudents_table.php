@@ -19,15 +19,18 @@ class CreateCoursestudentsTable extends Migration
             $table->foreign('course_id')->references('id')->on('courses')
                 ->onDelete('cascade');
 
-                $table->bigInteger('student_id')->unsigned()->nullable();
+            // $table->bigInteger('student_id')->nullable();
+
+            $table->bigInteger('student_id')->unsigned()->nullable();
             $table->foreign('student_id')->references('id')->on('students')
                 ->onDelete('cascade');
 
-
+            // $table->bigInteger('evaluation');
+            $table->bigInteger('status');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
-                $table->softDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

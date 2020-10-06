@@ -225,4 +225,15 @@ class PresencestudentsController extends Controller
     {
         //
     }
+    public function showPresentParentChildren($id)
+    {
+        //
+        if(Auth::user()->role == 4){
+            $findChildren = students::where('parent_id',$id)->get();
+            
+        }else{
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect()->back();
+        }
+    }
 }

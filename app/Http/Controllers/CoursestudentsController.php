@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\courses;
 use App\coursestudents;
+use App\students;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoursestudentsController extends Controller
 {
@@ -32,9 +35,13 @@ class CoursestudentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $findCourse = courses::find($id);
+        $studnets = students::all();
+        $thisCourseStudents = coursestudents::where('course_id',$id)->orderBy('id','desc')->get();
+        return view('control.Coursestudents.create', compact('findCourse', 'studnets', 'thisCourseStudents'));
     }
 
     /**
@@ -46,6 +53,19 @@ class CoursestudentsController extends Controller
     public function store(Request $request)
     {
         //
+        foreach ($request->input('student_id') as $ii => $value) {
+
+            $data = [
+                'course_id' =>  $request->course,
+                'student_id' => $request->input('student_id')[$ii],
+                'evaluation' =>  0,
+                'user_id' => Auth::user()->id,
+                'status' => 0,
+            ];
+            coursestudents::create($data);
+        }
+        alert()->success('تم إضافة الطالب بنجاح');
+        return redirect('courses/' . $request->course);
     }
 
     /**
@@ -91,5 +111,18 @@ class CoursestudentsController extends Controller
     public function destroy(coursestudents $coursestudents)
     {
         //
+    }
+    public function updateAllRows(Request $request)
+    {
+        //
+        foreach ($request->input('ids') as $ii => $value) {
+
+            $data = [
+                'status' => $request->input('status')[$ii],
+            ];
+            coursestudents::where('id', $request->input('ids')[$ii])->update($data);
+        }
+        alert()->success('تم تعديل  بنجاح');
+        return redirect()->back();
     }
 }

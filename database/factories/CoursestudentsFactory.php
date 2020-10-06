@@ -11,5 +11,6 @@ $factory->define(coursestudents::class, function (Faker $faker) {
         'course_id' => Rand(1,10),
         'student_id' => Rand(1,10),
         'user_id' => Rand(1,10),
+        'status' => Rand(0,1),
     ];
 });

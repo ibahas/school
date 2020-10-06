@@ -95,12 +95,20 @@
                     </a>
                   </li>
                   @endif
+                  @if(Auth::user()->role == 4)
+                  <li class="nav-item  {{ Request::is('reportStudents*') ? 'active' : '' }}  ">
+                    <a class="nav-link " href="{{action('PresencestudentsController@showPresentParentChildren',Auth::user()->id)}}">
+                      <i class="material-icons">error_outline</i>
+                      <p>{{ _('أيام حضور الأبناء')}}</p>
+                    </a>
+                  </li>
                   <li class="nav-item  {{ Request::is('reportStudents*') ? 'active' : '' }}  ">
                     <a class="nav-link " href="{{url('reportStudents')}}">
                       <i class="material-icons">error_outline</i>
                       <p>{{ _('بلاغات الأبناء')}}</p>
                     </a>
                   </li>
+                  @endif
               </ul>
          
             </ul>

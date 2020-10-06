@@ -12,5 +12,6 @@ $factory->define(presencecourses::class, function (Faker $faker) {
         'student_id' => Rand(1, 10),
         'user_id' => Rand(1, 10),
         'status' => Rand(0, 1),
+        'date' => $faker->date(),
     ];
 });

@@ -40,7 +40,6 @@
         <tbody>
             @foreach ($students as $student)
             <tr scope="row">
-                    
                 <td>{{$student->name}}</td>
                 <td>{{$student->bod}}</td>
                 <td>0{{$student->phone}}</td>
