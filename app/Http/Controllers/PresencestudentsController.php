@@ -229,8 +229,11 @@ class PresencestudentsController extends Controller
     {
         //
         if(Auth::user()->role == 4){
-            $findChildren = students::where('parent_id',$id)->get();
-            
+            $findChildren = students::where('pearint_id',$id)->get();
+            $findPresenceChildren  = presencestudents::all();
+
+            return view('control.parent.showPresentParentChildren',compact('findPresenceChildren','findChildren'));
+
         }else{
             alert()->warning('لا يوجد لديك أي صلاحية');
             return redirect()->back();

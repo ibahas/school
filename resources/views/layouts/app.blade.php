@@ -96,7 +96,7 @@
                   </li>
                   @endif
                   @if(Auth::user()->role == 4)
-                  <li class="nav-item  {{ Request::is('reportStudents*') ? 'active' : '' }}  ">
+                  <li class="nav-item  {{ Request::is('presencestudents*') ? 'active' : '' }}  ">
                     <a class="nav-link " href="{{action('PresencestudentsController@showPresentParentChildren',Auth::user()->id)}}">
                       <i class="material-icons">error_outline</i>
                       <p>{{ _('أيام حضور الأبناء')}}</p>
@@ -106,6 +106,18 @@
                     <a class="nav-link " href="{{url('reportStudents')}}">
                       <i class="material-icons">error_outline</i>
                       <p>{{ _('بلاغات الأبناء')}}</p>
+                    </a>
+                  </li>
+                  <li class="nav-item  {{ Request::is('presenceprogram*') ? 'active' : '' }}  ">
+                    <a class="nav-link " href="{{action('StudentsParentsController@childrenPresenceProgram', Auth::user()->id)}}">
+                      <i class="material-icons">error_outline</i>
+                      <p>{{ _('البرامج')}}</p>
+                    </a>
+                  </li>
+                  <li class="nav-item  {{ Request::is('presencechildrencourse*') ? 'active' : '' }}  ">
+                    <a class="nav-link " href="{{action('StudentsParentsController@presenceChildrenCourses', Auth::user()->id)}}">
+                      <i class="material-icons">error_outline</i>
+                      <p>{{ _('الدورات')}}</p>
                     </a>
                   </li>
                   @endif

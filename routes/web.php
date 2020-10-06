@@ -131,7 +131,9 @@ Route::group(['middleware' => 'auth'], function () {
  */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/presencestudents/{id}', 'PresencestudentsController@showPresentParentChildren');
+    Route::get('/presencestudents/parent/{id}', 'PresencestudentsController@showPresentParentChildren');
+    Route::get('/presenceprogram/parent/{id}','StudentsParentsController@childrenPresenceProgram');
+    Route::get('/presencechildrencourse/parent/{id}','StudentsParentsController@presenceChildrenCourses');
 });
 
     /*

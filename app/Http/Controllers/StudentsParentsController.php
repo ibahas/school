@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\dateworkprograms;
+use App\presencecourses;
+use App\presencestudents;
 use App\studentsParents;
 use App\students;
 use App\User;
@@ -110,5 +113,33 @@ class StudentsParentsController extends Controller
     public function destroy(studentsParents $studentsParents)
     {
         //
+    }
+    public function childrenPresenceProgram($id)
+    {
+        //
+        if(Auth::user()->role == 4){
+            $findChildren = students::where('pearint_id',$id)->get();
+            $findPresenceChildrenDateWork  = dateworkprograms::all();
+
+            return view('control.parent.childrenPresenceProgram',compact('findPresenceChildrenDateWork','findChildren'));
+
+        }else{
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect()->back();
+        }
+    }
+    public function presenceChildrenCourses($id)
+    {
+        //
+        if(Auth::user()->role == 4){
+            $findChildren = students::where('pearint_id',$id)->get();
+            $findPresenceChildrencourses  = presencecourses::all();
+
+            return view('control.parent.presenceChildrenCourses',compact('findPresenceChildrencourses','findChildren'));
+
+        }else{
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect()->back();
+        }
     }
 }
