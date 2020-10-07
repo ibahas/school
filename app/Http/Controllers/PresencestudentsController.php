@@ -109,8 +109,7 @@ class PresencestudentsController extends Controller
                     $presencestudents->delete($arr2->id);
                 }
                 presencestudents::create($data);
-                echo alert()->success('تم تسجيل غياب للطالب');
-                exit;
+                 alert()->success('تم تسجيل غياب للطالب');
                 return redirect('studnets');
             }
             if ($findThisDate  == 0 && $request->status == 0) {

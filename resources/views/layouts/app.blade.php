@@ -85,6 +85,12 @@
                       <p>{{ _('طلابي')}}</p>
                     </a>
                   </li>
+                  <li class="nav-item  {{ Request::is('reportStudents*') ? 'active' : '' }}  ">
+                    <a class="nav-link " href="{{url('reportStudents')}}">
+                      <i class="material-icons">error_outline</i>
+                      <p>{{ _('بلاغات الطلاب')}}</p>
+                    </a>
+                  </li>
                   @endif
 
                   @if(Auth::user()->role == 1 || Auth::user()->role == 2 || Auth::user()->role == 3 )
@@ -102,12 +108,6 @@
                       <p>{{ _('أيام حضور الأبناء')}}</p>
                     </a>
                   </li>
-                  <li class="nav-item  {{ Request::is('reportStudents*') ? 'active' : '' }}  ">
-                    <a class="nav-link " href="{{url('reportStudents')}}">
-                      <i class="material-icons">error_outline</i>
-                      <p>{{ _('بلاغات الأبناء')}}</p>
-                    </a>
-                  </li>
                   <li class="nav-item  {{ Request::is('presenceprogram*') ? 'active' : '' }}  ">
                     <a class="nav-link " href="{{action('StudentsParentsController@childrenPresenceProgram', Auth::user()->id)}}">
                       <i class="material-icons">error_outline</i>
@@ -120,7 +120,14 @@
                       <p>{{ _('الدورات')}}</p>
                     </a>
                   </li>
+                  <li class="nav-item  {{ Request::is('reportStudents*') ? 'active' : '' }}  ">
+                    <a class="nav-link " href="{{url('reportStudents')}}">
+                      <i class="material-icons">error_outline</i>
+                      <p>{{ _('بلاغات الأبناء')}}</p>
+                    </a>
+                  </li>
                   @endif
+                 
               </ul>
          
             </ul>

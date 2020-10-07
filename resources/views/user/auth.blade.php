@@ -82,7 +82,7 @@
                 @endif
               </h6>
               <h4 class="card-title">{{Auth::user()->name}}</h4>
-              <p class="card-description">ABVCC</p>
+              {{-- <p class="card-description">ABVCC</p> --}}
             </div>
           </div>
         </div>
