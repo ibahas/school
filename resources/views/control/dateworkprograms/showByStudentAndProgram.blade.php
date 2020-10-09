@@ -25,6 +25,7 @@
 <div class="data"  >
     <table  class="table">
         <thead>
+            <th>*</th>
             <th>اليوم</th>
             <th>من</th>
             <th>الى</th>
@@ -36,11 +37,15 @@
             @endif
         </thead>
         <tbody>
+            @php
+             $i = 1;   
+            @endphp
             <form action="{{action('DateworkprogramsController@updateAll')}}" method="post">
                 @csrf
 
                 @foreach ($data as $row)
-                <tr scope="row">
+                <tr scope="row" @if($i % 8 == 0) style="border-top-color: #4caf50 !important; border-top: solid;" @endif>
+                    <td>{{$i++}}</td>
                     @php
                         $months = array("Jan" => "يناير", "Feb" => "فبراير", "Mar" => "مارس", "Apr" => "أبريل", "May" => "مايو", "Jun" => "يونيو", "Jul" => "يوليو", "Aug" => "أغسطس", "Sep" => "سبتمبر", "Oct" => "أكتوبر", "Nov" => "نوفمبر", "Dec" => "ديسمبر");
                         $your_date = $row->date; // The Current Date

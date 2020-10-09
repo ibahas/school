@@ -16,6 +16,15 @@
               top: 10px !important;
         }th,td{
           text-align: center !important;
+        }th { 
+            padding: 5px; 
+            background-color: #4cb96b; 
+            position: -webkit-sticky; 
+            position: sticky; 
+            top: 0; 
+            z-index: 999;
+        } table{
+            margin-top: 1rem !important;
         }
     </style>
 
