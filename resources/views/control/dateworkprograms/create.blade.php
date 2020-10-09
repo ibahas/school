@@ -45,7 +45,7 @@
             <form action="{{action('DateworkprogramsController@store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <button type="button" class="btn btn-success" id="btnAddWeek">
-                    <i class="material-icons">add</i>
+                    <i class="material-icons" style="padding-top: 1rem; padding-bottom: 1rem">add</i>
                 </button>
                 <div id="week1">
                 </div>

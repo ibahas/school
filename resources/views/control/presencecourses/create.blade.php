@@ -60,7 +60,9 @@
 
                         </tbody>
                     </table>
-                    <button type="button" class="float-right btn btn-success" id="addDay">إضافة يوم</button>
+                    <button type="button" class="float-right btn btn-success" id="addDay">
+                        <i class="material-icons" style="padding-top: 1rem; padding-bottom: 1rem">add</i>
+                    </button>
                     <button type="submit" class="btn btn-info">إضافة</button>
                 
             </form>
