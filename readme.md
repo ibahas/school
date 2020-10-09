@@ -10,7 +10,7 @@
 <br/>
 <span>php artisan key:generate </span>
 <br/>
-<span>php artisan migrate</span>
+<span>php artisan migrate Or php artisan migrate:fresh --seed</span>
 <br/>
 <span>php artisan serve</span>
 </p>
