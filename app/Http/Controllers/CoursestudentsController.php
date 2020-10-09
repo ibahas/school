@@ -62,7 +62,11 @@ class CoursestudentsController extends Controller
                 'user_id' => Auth::user()->id,
                 'status' => 0,
             ];
-            coursestudents::create($data);
+            $ifThisStudentExsist = coursestudents::where('course_id',$request->course)->where('student_id',$request->input('student_id')[$ii])->count();
+            if($ifThisStudentExsist !== 0){
+            }else{
+                coursestudents::create($data);
+            }
         }
         alert()->success('تم إضافة الطالب بنجاح');
         return redirect('courses/' . $request->course);

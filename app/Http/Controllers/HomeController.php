@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\courses;
+use App\coursetesting;
 use App\programs;
 use App\students;
 use App\studentsParents;
@@ -41,6 +42,10 @@ class HomeController extends Controller
             //ReportStudents
             $takeReportStudents = 5;
             $reportStudents = studentsParents::orderBy('id', 'DESC')->take($takeReportStudents)->get();
+            //coursetestings
+            // $coursetesting = coursetesting::all();
+            // dd($coursetesting);
+            
             return view('home', compact('students', 'programs', 'courses', 'reportStudents'));
         }
         if (Auth::user()->role == 3) {

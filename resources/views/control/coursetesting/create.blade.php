@@ -51,6 +51,9 @@
                         </thead>
                         <tbody>
                             @foreach ($coursestudents as $row)
+                            @php
+                                $thiStudent = App\coursetesting::where('course_id',$course->id)->where('student_id',$row->student_id)->count();
+                            @endphp
                             <tr scope="row">
                                 <td>{{App\students::find($row->student_id)->name}}</td>
                                 <td>
@@ -58,8 +61,12 @@
                                         <p data-toggle="tooltip" data-placement="right" title="يتم قبوله من قبل الأدمن" >
                                         جاري</p>
                                     @else
-                                    <input type="number" required name="rating[]">
-                                    <input type="number" value="{{$row->student_id}}" required name="student_id[]" required hidden>
+                                    @if($thiStudent !== 0) 
+                                    <p class="text-success" data-toggle="tooltip" data-placement="right" title="هذا الطالب تم إضافة علامة الدورة مسبقاً" >
+                                        تم</p>
+                                    @endif
+                                    <input @if($thiStudent !== 0) hidden @endif  type="number"  name="rating[]">
+                                    <input @if($thiStudent !== 0) hidden @endif type="number" value="{{$row->student_id}}"  name="student_id[]" required hidden>
                                     @endif
                                 </td>
                             </tr>

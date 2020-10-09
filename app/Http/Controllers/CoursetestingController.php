@@ -63,8 +63,15 @@ class CoursetestingController extends Controller
                 'status' => 1,
                 'user_id' => Auth::user()->id,
             ];
-            coursetesting::create($data);
+            $findIfThisExists = coursetesting::where('course_id', $request->course_id)->where('student_id', $request->student_id[$ii])->count();
+            // echo $findIfThisExists;
+            // dd($findIfThisExists);
+            if($findIfThisExists !== 0){
+            }else{
+                coursetesting::create($data);
+            }
         }
+        // exit;
         alert()->success('تم إضافة علامة الدورة  بنجاح للطلاب');
         return redirect()->back();
     }

@@ -23,6 +23,7 @@
             position: sticky; 
             top: 0; 
             z-index: 999;
+            color: white !important;
         } table{
             margin-top: 1rem !important;
         }
