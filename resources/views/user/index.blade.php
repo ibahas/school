@@ -57,7 +57,41 @@
                 <td>{{$row->phone}}</td>
                 <td>{{$row->email}}</td>
                 <td>
-                    
+                    @if (Auth::user()->role == 1 )
+                    @if($row->role == 1)
+                    @else
+                        <a class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="تحديث كلمت المرور" 
+                        href="{{route('updateUser',$row->id)}}">
+                            <i class="material-icons" style="padding-top: 1rem;padding-bottom: 1rem">vpn_key</i>
+                        </a>
+
+                        <form style="display: inline-block;" action="{{route('banndUser',$row->id)}}"
+                            method="post">
+                            @csrf
+
+                            @if($row->status == 0)
+                            <button class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="فك حضر"
+                                type="submit">
+                                <i class="material-icons" style="padding-top: 1rem;padding-bottom: 1rem">delete_forever</i>
+                            </button>
+                            @else
+                            <button class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="حظر"
+                                type="submit">
+                                <i class="material-icons" style="padding-top: 1rem;padding-bottom: 1rem">delete_forever</i>
+                            </button>
+                            @endif
+                        </form>
+                        @endif
+                    @endif
+                    @if (Auth::user()->role == 2)
+                        @if($row->role == 1 || $row->role == 2)
+                            @else
+                            <a class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="تحديث كلمت المرور" 
+                            href="{{route('updateUser',$row->id)}}">
+                                <i class="material-icons" style="padding-top: 1rem;padding-bottom: 1rem">vpn_key</i>
+                            </a>
+                        @endif
+                    @endif
                 </td>
             </tr>
             @endforeach

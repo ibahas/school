@@ -42,6 +42,10 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth', 'namespace' => 'user'
     Route::post('/destroy/{id}', 'UsersController@destroy')->name('destroyUser');
     //جميع الأباء
     Route::get('/parents', 'UsersController@showAllParents')->name('showAllParents');
+    //عرض بيانات المستخدم وتغير كلمت المرور ...
+    Route::get('/updateUser/{id}','UsersController@updateUser')->name('updateUser');
+    //حظر مستخدم معين .
+    Route::post('/bannd/{id}','UsersController@bannd')->name('banndUser');
 });
 
 //للمحفظ

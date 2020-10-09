@@ -14,7 +14,9 @@
         }
         .form-group .bmd-label-static {
               top: 10px !important;
-          }
+        }th,td{
+          text-align: center !important;
+        }
     </style>
 
 </head>

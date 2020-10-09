@@ -6,35 +6,20 @@
 @endsection
 
 @section('footer')
-<script src="{!! asset('js/sweetalert/sweetalert.min.js') !!}"></script>
-<script>
-    $(document).ready(function () {
-        $(".sweet-overlay").fadeTo(2000, 500).slideUp(500, function () {
-            $(".sweet-overlay").slideUp(500);
-        });
-        $(".sweet-alert").fadeTo(2000, 500).slideUp(500, function () {
-            $(".sweet-alert").slideUp(500);
-        });
-    });
-</script>
 @include('sweet::alert')
-<script>
-    @if (count($errors)) @foreach($errors -> all() as $item)
-    swal({ "timer": 2500, "html": true, "title": "{{$item}}", "showConfirmButton": false, "type": "warning" });
-    @endforeach
-    @endif
-</script>
+<script src="{!! asset('js/sweetalert/sweetalert.min.js') !!}"></script>
+
 @endsection
 @extends('layouts.log')
 
 @section('contentLog')
+@if($errors->any())
+    {!! implode('', $errors->all('<div>:message</div>')) !!}
+@endif
 
 <form action="{{ route('login') }}" class="m-login__form m-form" method="post" role="form">
     @csrf
     <div class="form-group m-form__group">
-        <label class="invalid-feedback" >
-            <strong>awadwdawd</strong>
-        </label>
        <input class="form-control m-input"  type="email"  placeholder="البريد الإلكتروني" name="email"   value="{{ old('email') }}" required autocomplete="email" autofocus/>
     </div>
     <div class="form-group m-form__group">
@@ -58,5 +43,19 @@
        <button id="m_login_signin_submit" type="submit" class="btn btn-focus m-btn m-btn--pill   m-login__btn">تسجيل الدخول </button>
     </div>
  </form>
+<script src="{!! asset('js/jquery.js') !!}"></script>
+
+<script src="{{asset('assets\js\plugins\sweetalert2.js')}}"></script>
+
+@if (session('alert'))
+    <script>
+            Swal.fire({
+                icon: 'warning',
+                title: '{{ session('alert') }}',
+                showConfirmButton : false,
+                // timer: 2000,
+            })
+    </script>
+@endif
 
 @endsection

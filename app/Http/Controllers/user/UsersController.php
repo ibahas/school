@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use PDO;
 
 class UsersController extends Controller
 {
@@ -22,8 +23,8 @@ class UsersController extends Controller
     //
     public function index()
     {
-        if (Auth::user()->role == 1) {
-            $data = User::all();
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            $data = User::orderBy('id', 'DESC')->get();
             return view('user.index', compact('data'));
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية');
@@ -39,7 +40,7 @@ class UsersController extends Controller
     }
     public function create()
     {
-        $data = user::all();
+        $data = user::orderBy('id', 'DESC')->get();
         return view('user.create', compact('data'));
     }
 
@@ -69,23 +70,24 @@ class UsersController extends Controller
 
     public function updatePassword(Request $request, $id)
     {
-        $user = User::find(Auth::user()->id);
-        $request->validate(
-            [
-                'password' => 'required|min:6',
-                'confirmPassword' => 'required|same:password',
-                'oldPassword' => 'required',
-            ]
-        );
-        if (Hash::check($request->input('oldPassword'), $user->password)) {
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            $user = User::find($id);
+            // dd($user);
+            $request->validate(
+                [
+                    'password' => 'required|min:6',
+                    'confirmPassword' => 'required|same:password',
+                ]
+            );
             $user->password = bcrypt($request->input('password'));
             $user->save();
             alert()->success('تم تحديث كلمت المرور بنجاح');
-            return redirect('/users/show');
+            return redirect('/users');
         } else {
-            alert()->warning('تأكد من كلمت المرور الخاصة بك .');
-            return back();
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect('home');
         }
+
         // User::where('id', Auth::user()->id)->update(Auth::user()->id);
 
     }
@@ -148,9 +150,14 @@ class UsersController extends Controller
     }
     public function showAllParents()
     {
-        # code...
-        $data = User::where('role', 4)->get();
-        return view('user.parents', compact('data'));
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            # code...
+            $data = User::where('role', 4)->orderBy('id', 'DESC')->get();
+            return view('user.parents', compact('data'));
+        } else {
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect('home');
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -167,9 +174,9 @@ class UsersController extends Controller
         $string = request()->headers->get('referer');
         $pieces = explode('/', $string);
         $last_word = array_pop($pieces);
-        if($last_word == "parents"){
+        if ($last_word == "parents") {
             return back();
-        }else{
+        } else {
             return redirect('users');
         }
     }
@@ -178,10 +185,37 @@ class UsersController extends Controller
     {
         //
         if (Auth::user()->role == 1) {
-            $data = User::all();
+            $data = User::orderBy('id', 'DESC')->get();
             return view('user.teacher', compact('data'));
         } else {
             alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect()->back();
+        }
+    }
+    public function updateUser($id)
+    {
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+
+            $data = User::find($id);
+            return view('user.updateUser', compact('data'));
+        } else {
+            alert()->warning('لا يوجد لديك أي صلاحية');
+            return redirect('home');
+        }
+    }
+    public function bannd($id)
+    {
+        # code...
+        $user = User::find($id);
+        if ($user->status == 0) {
+            $user->status = 1;
+            $user->save();
+            alert()->success('تم فك الحظر عن المستخدم');
+            return redirect()->back();
+        } else {
+            $user->status = 0;
+            $user->save();
+            alert()->success('تم الحظر عن المستخدم');
             return redirect()->back();
         }
     }

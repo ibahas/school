@@ -26,10 +26,10 @@ class rolesseeder  extends Seeder
         }
 
         $users = [
-            ['id'=> 11, 'name' => 'Administrator','email'=>'admin@admin.com','role' =>'1','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10)],
-            ['id'=> 12, 'name' => 'Admin','email'=>'admin1@admin.com','role' =>'2','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10)],
-            ['id'=> 13, 'name' => 'Moh','email'=>'moh@moh.com','role' =>'3','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10)],
-            ['id'=> 14, 'name' => 'Parent','email'=>'par@par.com','role' =>'4','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10)],
+            ['id'=> 11, 'name' => 'Administrator','email'=>'admin@admin.com','role' =>'1','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10),'status' => '1'],
+            ['id'=> 12, 'name' => 'Admin','email'=>'admin1@admin.com','role' =>'2','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10),'status' => '1'],
+            ['id'=> 13, 'name' => 'Moh','email'=>'moh@moh.com','role' =>'3','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10),'status' => '1'],
+            ['id'=> 14, 'name' => 'Parent','email'=>'par@par.com','role' =>'4','bod'=>'1971-10-31','photo'=>'','address'=>'GAZA','phone'=>'0599999999','email_verified_at'=> now(),'password'=>'$2y$10$sE2HaNSL1lHmIWZp2bt7ee.tAsPY5/99I0gQiHi.j4Z5LhS0WqxL2','remember_token' => Str::random(10),'status' => '0'],
         ];
 
         factory(\App\User::class, 10)->create();

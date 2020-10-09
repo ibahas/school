@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link href="{!! asset('css/sweetalert/sweetalert.css') !!}" rel="stylesheet" type="text/css">
 <meta charset="utf-8" />
 <title>صفحة تسجيل الدخول  - مدرسة الإتقان</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -131,6 +132,16 @@ body::-webkit-scrollbar-thumb {
 </div>
 </div>
 </div>
+<script>
+  $(document).ready(function () {
+      $(".swal2-container").fadeTo(2000, 500).slideUp(500, function () {
+          $(".swal2-container").slideUp(500);
+      });
+      $(".swal2-header").fadeTo(2000, 500).slideUp(500, function () {
+          $(".swal2-header").slideUp(500);
+      });
+  });
+</script>
 <script src="{{asset('vendors.bundle.js')}}" type="a65adff1ddaab7220ff91169-text/javascript"></script>
 <script src="{{asset('scripts.bundle.js')}}" type="a65adff1ddaab7220ff91169-text/javascript"></script>
 </html>

@@ -76,10 +76,26 @@ class StafftimeController extends Controller
                 alert()->warning('هذا المحفقظ تم  تسجيل حضور مسبقاً .');
                 return redirect()->back();
             } else {
-                $thisDelete = stafftime::where('user_id',$request->user_id)->where('date',$date)->first();
+                if($request->state == 1){
+                    $vvv = 2;
+                }else{
+                    $vvv = 1;
+                }
+
+                $thisDelete = stafftime::where('user_id', $request->user_id)->where('date', $date)->where('state', $vvv)->first();
+                if ($thisDelete !== null) {
+                    $stafftime = stafftime::find($thisDelete->id);
+                    $stafftime->delete($thisDelete->id);
+                    $data = [
+                        'user_id' => $request->user_id,
+                        'state' => $request->state,
+                        'date' => $date,
+                    ];
+                    stafftime::create($data);
+                    alert()->success('تم إضافة الحضور  .');
+                    return redirect()->back();
+                }
                 // dd($thisDelete);
-                $stafftime = stafftime::find($thisDelete->id);
-                $stafftime->delete($thisDelete->id);
                 $data = [
                     'user_id' => $request->user_id,
                     'state' => $request->state,

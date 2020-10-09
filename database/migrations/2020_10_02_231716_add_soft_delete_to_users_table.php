@@ -15,6 +15,7 @@ class AddSoftDeleteToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->integer('status')->after('role');
             $table->softDeletes();
         });
     }
