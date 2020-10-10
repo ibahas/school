@@ -26,6 +26,10 @@
             color: white !important;
         } table{
             margin-top: 1rem !important;
+        }@media screen and (min-width: 991px) {
+            .nav-mobile-menu {
+                display: none !important; 
+            }
         }
     </style>
 

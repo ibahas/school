@@ -96,8 +96,17 @@ class PresencecoursesController extends Controller
     {
         # code...
         $data = presencecourses::where('course_id', $idCourses)->where('student_id', $idStudent)->get();
-        $first = presencecourses::where('course_id', $idCourses)->first();
-        return view('control.presencecourses.show', compact('data', 'first'));
+        $countData = presencecourses::where('course_id', $idCourses)->where('student_id', $idStudent)->count();
+        $first = presencecourses::where('course_id', $idCourses)->where('student_id', $idStudent)->first();
+        // dd($first);
+
+        if($countData !== 0){
+            return view('control.presencecourses.show', compact('data', 'first'));
+        }else{
+            alert()->warning('لا يوجد أيام عمل لهذا الطالب في هذه الدورة');
+            return redirect()->back();
+        }
+
     }
 
     /**

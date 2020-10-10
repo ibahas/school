@@ -112,9 +112,12 @@ class CoursestudentsController extends Controller
      * @param  \App\coursestudents  $coursestudents
      * @return \Illuminate\Http\Response
      */
-    public function destroy(coursestudents $coursestudents)
+    public function destroy($id)
     {
         //
+        // dd(request()->headers->get('referer'));
+        // $findThisStudentInThisCourse = coursestudents::where('student_id',$id)->delete();
+
     }
     public function updateAllRows(Request $request)
     {

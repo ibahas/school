@@ -82,9 +82,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{action('PresencecoursesController@showDetailsStudent',[$courses->id,$row->id])}}">عرض أيام عمل الدورة</a>
-                                    <br>
-                                    <a href="{{action('CoursestudentsController@destroy',$row ->id)}}">حذف</a>
+                                    <a href="{{action('PresencecoursesController@showDetailsStudent',[$courses->id,$row->student_id])}}">  عرض أيام عمل الدورة</a>
                                 </td>
                             </tr>
                             @endforeach
