@@ -184,7 +184,7 @@ class UsersController extends Controller
     public function showAllTeacher()
     {
         //
-        if (Auth::user()->role == 1) {
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
             $data = User::orderBy('id', 'DESC')->get();
             return view('user.teacher', compact('data'));
         } else {

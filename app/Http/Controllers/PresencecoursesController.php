@@ -57,7 +57,7 @@ class PresencecoursesController extends Controller
             'date' => 'required',
         ]);
         $studnetsThisCourse = coursestudents::where('course_id', $request->course_id)->get();
-        // dd($request->course_id);
+        // dd($studnetsThisCourse);
         $studnetsThisCourseCount = coursestudents::where('course_id', $request->course_id)->count();
         for ($i = 0; $i <  $studnetsThisCourseCount; $i++) {
             # code...
@@ -68,7 +68,7 @@ class PresencecoursesController extends Controller
                 $data[$ii] = [
                     'date' => $request->date[$ii],
                     'user_id' => Auth::user()->id,
-                    'student_id' => $studnetsThisCourse[$i]->id,
+                    'student_id' => $studnetsThisCourse[$i]->student_id,
                     'status' => 0,
                     'course_id' => $request->course_id,
                 ];

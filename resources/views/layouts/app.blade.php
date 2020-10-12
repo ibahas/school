@@ -30,6 +30,8 @@
             .nav-mobile-menu {
                 display: none !important; 
             }
+        }.w3-modal{
+          z-index: 9999;
         }
     </style>
 
@@ -201,7 +203,7 @@
                 @if (Route::currentRouteName() !== 'home' )
                     @if (request()->is('*/create') || request()->is('*/create/*') || request()->is('*/edit/*') || request()->is('*/edit') || request()->is('*/*'))
                     @else
-                    <input type="text" id="inputSearch" onkeyup="funSearch()" style="float: right">
+                    <input placeholder="البحث في أو عمود في الجدول" type="text" id="inputSearch" onkeyup="funSearch()" style="float: right">
                     @endif
                 @endif
                 <br>

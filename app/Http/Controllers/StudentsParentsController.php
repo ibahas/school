@@ -132,7 +132,8 @@ class StudentsParentsController extends Controller
     {
         //
         if(Auth::user()->role == 4){
-            $findChildren = students::where('pearint_id',$id)->get();
+            $findChildren = students::where('pearint_id',$id)->orderBy('id', 'DESC')->get();
+            // dd($findChildren);
             $findPresenceChildrencourses  = presencecourses::all();
 
             return view('control.parent.presenceChildrenCourses',compact('findPresenceChildrencourses','findChildren'));
